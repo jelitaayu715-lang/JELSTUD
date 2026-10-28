@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JELSTUD - Belajar Bahasa Spanyol</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #FFF3C4;
+      --card-bg: #FFFFFF;
+      --yellow-butter: #FFE896;
+      --yellow-accent: #E5B823;
+      --green-dark: #3F523A;
+      --text-dark: #2C3528;
+      --text-muted: #6B7767;
+      --border-color: #E6DCB8;
+      --danger-color: #D9534F;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body {
+    background-color: var(--bg-main, #FFF3C4);
+    color: var(--text-dark, #2C3528);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container, .app-container {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--card-bg, #FFFFFF);
+    position: relative;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+    overflow: visible;
+    border-radius: 16px;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        display: block;
+    }
+    .container, .app-container {
+        max-width: 100% !important;
+        min-height: 100vh !important;
+        max-height: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+    }
+    .navbar { max-width: 100% !important; border-radius: 0 !important; }
+}
+
+    /* Auth Screen (Login & Register) */
+    #auth-screen {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: var(--bg-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .auth-card {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 24px;
+      padding: 30px 24px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .auth-title { font-size: 26px; font-weight: 900; color: var(--green-dark); margin-bottom: 6px; letter-spacing: 1px; }
+    .auth-subtitle { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+    .auth-input-group { margin-bottom: 16px; text-align: left; }
+    .auth-input-group label { display: block; font-size: 12px; font-weight: 700; color: var(--green-dark); margin-bottom: 6px; }
+    .auth-input { width: 100%; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: 12px; font-size: 14px; outline: none; background: #FAFAFA; }
+    .auth-input:focus { border-color: var(--green-dark); background: #FFF; }
+    .auth-btn { width: 100%; padding: 12px; background: var(--green-dark); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 15px; cursor: pointer; margin-top: 10px; }
+    .auth-switch { margin-top: 16px; font-size: 13px; color: var(--text-muted); }
+    .auth-switch span { color: var(--green-dark); font-weight: 700; cursor: pointer; text-decoration: underline; }
+
+    /* Splash Screen */
+    #splash-screen {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: var(--bg-main);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+      text-align: center;
+      padding: 20px;
+    }
+    #splash-screen.slide-up { transform: translateY(-100%); }
+    .splash-title { font-size: 32px; font-weight: 900; color: var(--green-dark); letter-spacing: 3px; margin-bottom: 8px; }
+    .splash-subtitle { font-size: 20px; font-style: italic; color: var(--text-dark); font-family: Georgia, serif; margin-bottom: 40px; }
+    .swipe-instruction { font-size: 13px; color: var(--text-muted); letter-spacing: 1.5px; font-weight: 700; animation: bounceUp 1.5s infinite; cursor: pointer; }
+    @keyframes bounceUp { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    /* Navbar */
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background-color: var(--bg-main); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; width: 100%; max-width: 480px; box-sizing: border-box; }
+    .brand { font-size: 26px; font-weight: 900; color: var(--green-dark); letter-spacing: 1.5px; display: flex; align-items: center; gap: 6px; }
+    .brand-dot { width: 10px; height: 10px; background-color: var(--green-dark); border-radius: 50%; }
+    .btn-logout { background: transparent; border: 1px solid var(--green-dark); color: var(--green-dark); padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer; }
+
+    .container { max-width: 600px; margin: 0 auto; padding: 20px 16px 90px 16px; }
+    @media (min-width: 768px) {
+      .container, .app-container { max-width: 800px; padding: 30px 24px 90px 24px; }
+      .navbar { max-width: 800px; border-radius: 16px 16px 0 0; }
+      body { padding-bottom: 30px; }
+      .bottom-nav { max-width: 800px; }
+    }
+    /* KOSAKATA two-column grid on desktop */
+    .vocab-grid { display: flex; flex-direction: column; gap: 14px; }
+    .vocab-search-wrapper { width: 100%; }
+    @media (min-width: 900px) {
+      .vocab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; }
+      .vocab-search-wrapper { grid-column: 1 / -1; }
+    }
+    @media (min-width: 900px) {
+      .container, .app-container { max-width: 1200px; }
+      .navbar { max-width: 1200px; }
+      .bottom-nav { max-width: 800px; }
+      #stories-list { display: flex; gap: 24px; align-items: flex-start; }
+      .baca-left-column { flex: 1; min-width: 0; }
+      .baca-right-column { flex: 1; min-width: 0; }
+      .spanish-alphabet-section { margin-top: 0 !important; }
+    }
+
+    /* Streak Banner */
+    .streak-banner { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 16px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    .streak-info { display: flex; align-items: center; gap: 14px; }
+    .fire-icon-large { font-size: 30px; animation: flicker 1s infinite alternate; }
+    @keyframes flicker { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.15); opacity: 1; } }
+    .streak-count { font-size: 20px; font-weight: 800; color: var(--green-dark); }
+    .streak-status { font-size: 12px; color: var(--text-muted); }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .section-title { font-size: 20px; font-weight: 800; margin: 20px 0 12px 0; color: var(--green-dark); display: flex; align-items: center; gap: 8px; }
+
+    /* Story Card */
+    .story-card { background: var(--card-bg); border-radius: 16px; padding: 18px; margin-bottom: 12px; border: 1px solid var(--border-color); cursor: pointer; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .badge-level { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background-color: var(--yellow-butter); color: var(--green-dark); margin-bottom: 6px; }
+    .story-title { font-size: 16px; font-weight: 700; color: var(--text-dark); }
+
+    /* Reader Container */
+    .reader-container { display: none; background: var(--card-bg); border-radius: 20px; padding: 24px 20px; border: 1px solid var(--border-color); box-shadow: 0 4px 15px rgba(0,0,0,0.04); }
+    .btn-back { background: none; border: none; color: var(--green-dark); font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; margin-bottom: 16px; }
+    .reader-subtitle-trans { font-size: 13px; color: var(--text-muted); font-style: italic; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px dashed var(--border-color); }
+    .reading-text { font-size: 17px; line-height: 1.8; color: var(--text-dark); margin-bottom: 20px; text-align: justify; }
+    .interactive-word { padding: 2px 4px; border-radius: 4px; cursor: pointer; }
+    .interactive-word:hover, .interactive-word.selected { background-color: var(--yellow-butter); color: var(--green-dark); font-weight: 600; }
+    .article-source-box { background: var(--bg-main); padding: 14px; border-radius: 12px; font-size: 13px; color: var(--text-muted); border: 1px dashed var(--border-color); margin-top: 20px; margin-bottom: 24px; }
+    .article-source-box a { color: var(--green-dark); font-weight: 600; text-decoration: none; }
+
+    /* Kuis Pilihan Ganda (A, B, C, D, E) */
+    .main-quiz-section { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 18px; margin-top: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .quiz-question { font-size: 16px; font-weight: 800; color: var(--green-dark); margin-bottom: 14px; line-height: 1.4; }
+    .options-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+    .quiz-option-btn { background: var(--bg-main); border: 1px solid var(--border-color); padding: 12px 16px; border-radius: 12px; text-align: left; font-size: 14px; font-weight: 600; color: var(--text-dark); cursor: pointer; transition: all 0.2s; }
+    .quiz-option-btn:hover { background: var(--yellow-butter); border-color: var(--yellow-accent); }
+    .quiz-option-btn.selected-option { background: var(--green-dark); color: white; border-color: var(--green-dark); }
+    .btn-primary { width: 100%; padding: 14px; background: var(--green-dark); color: white; border: none; border-radius: 16px; font-weight: 700; font-size: 15px; cursor: pointer; }
+
+    /* Popover Terjemahan */
+    .translation-popover { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 450px; background: var(--green-dark); color: white; border-radius: 20px; padding: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: none; z-index: 200; text-align: center; }
+    .popover-toggle-group { display: inline-flex; background: rgba(255,255,255,0.15); border-radius: 30px; padding: 3px; margin-bottom: 12px; }
+    .pop-btn-toggle { background: transparent; border: none; color: white; padding: 6px 18px; font-size: 13px; font-weight: 700; border-radius: 20px; cursor: pointer; }
+    .pop-btn-toggle.active { background: white; color: var(--green-dark); }
+    .popover-content-card { background: var(--card-bg); color: var(--text-dark); border-radius: 16px; padding: 16px; text-align: left; margin-top: 6px; }
+    .pop-original-text { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; font-style: italic; line-height: 1.4; max-height: 80px; overflow-y: auto; }
+    .pop-translated-text { font-size: 15px; font-weight: 700; color: var(--green-dark); margin-bottom: 14px; line-height: 1.4; max-height: 90px; overflow-y: auto; }
+    .pop-actions-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 10px; }
+    .btn-audio-clean { background: var(--yellow-butter); border: none; padding: 6px 14px; border-radius: 10px; color: var(--green-dark); font-weight: 700; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    .btn-save-clean { background: var(--green-dark); border: none; padding: 6px 14px; border-radius: 10px; color: white; font-weight: 700; font-size: 12px; cursor: pointer; }
+    .btn-close-pop { background: none; border: none; color: var(--text-muted); font-size: 12px; cursor: pointer; }
+
+    /* Tab Kosakata */
+    .vocab-category-card { background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 14px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .vocab-cat-header { background: var(--yellow-butter); padding: 14px 18px; font-weight: 800; font-size: 15px; color: var(--green-dark); display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .vocab-list { padding: 12px 18px; display: flex; flex-direction: column; gap: 10px; display: none; }
+    .vocab-list.open { display: flex; }
+    .vocab-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; font-size: 14px; }
+    .vocab-es { font-weight: 700; color: var(--green-dark); }
+    .vocab-id { color: var(--text-muted); font-style: italic; }
+
+    /* Flashcard */
+    .flashcard { background: var(--card-bg); border: 2px solid var(--border-color); border-radius: 24px; height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; cursor: pointer; margin-bottom: 20px; position: relative; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    .card-word { font-size: 20px; font-weight: 800; color: var(--green-dark); margin-bottom: 10px; padding: 0 10px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+    .card-meaning { font-size: 14px; color: var(--text-muted); display: none; padding: 0 10px; }
+
+    /* Catetan */
+    .grammar-note { background: var(--card-bg); border-left: 4px solid var(--green-dark); padding: 16px; border-radius: 12px; margin-bottom: 14px; border: 1px solid var(--border-color); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .grammar-title { font-weight: 800; color: var(--green-dark); margin-bottom: 6px; font-size: 15px; }
+    .grammar-desc { font-size: 14px; color: var(--text-dark); line-height: 1.5; }
+
+    /* Bot AI Amigo */
+    .bot-toggle { position: fixed; bottom: 80px; right: 20px; width: 50px; height: 50px; background: var(--green-dark); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: var(--yellow-butter); font-size: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); cursor: pointer; z-index: 150; }
+    .chat-window { position: fixed; bottom: 140px; right: 20px; width: 320px; height: 400px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; flex-direction: column; z-index: 150; overflow: hidden; }
+    .chat-header { background: var(--yellow-butter); padding: 12px 16px; font-weight: 700; color: var(--green-dark); display: flex; justify-content: space-between; align-items: center; }
+    .chat-body { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+    .chat-msg { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 13px; line-height: 1.4; }
+    .msg-bot { background: var(--bg-main); align-self: flex-start; border: 1px solid var(--border-color); }
+    .msg-user { background: var(--green-dark); color: white; align-self: flex-end; }
+    .chat-input-area { display: flex; padding: 8px; border-top: 1px solid var(--border-color); gap: 6px; }
+    .chat-input { flex: 1; border: 1px solid var(--border-color); border-radius: 10px; padding: 8px 10px; font-size: 13px; outline: none; }
+    .chat-send { background: var(--green-dark); color: white; border: none; padding: 8px 12px; border-radius: 10px; cursor: pointer; }
+
+    /* Bottom Nav */
+    .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: var(--card-bg); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 0px)) 0; z-index: 100; box-shadow: 0 -4px 15px rgba(0,0,0,0.03); border-radius: 0 0 16px 16px; }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 3px; color: var(--text-muted); font-size: 10px; font-weight: 700; cursor: pointer; text-decoration: none; flex: 1; min-width: 0; padding: 0 2px; white-space: nowrap; overflow: hidden; }
+    .nav-item span { overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+    .nav-item.active { color: var(--green-dark); }
+    .nav-item i { font-size: 18px; }
+  </style>
+  <meta property="og:image" content="https://bolt.new/static/og_default.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
+</head>
+<body>
+
+  <!-- Halaman Login & Pendaftaran (Auth Screen) -->
+  <div id="auth-screen">
+    <div class="auth-card">
+      <div class="auth-title" id="auth-form-title">JELSTUD</div>
+      <div class="auth-subtitle" id="auth-form-subtitle">Masuk untuk mulai belajar bahasa Spanyol</div>
+      
+      <div id="auth-error" style="color: var(--danger-color); font-size: 12px; margin-bottom: 10px; font-weight: 700; display: none;"></div>
+
+      <div class="auth-input-group" id="name-group" style="display: none;">
+        <label>Nama Lengkap</label>
+        <input type="text" class="auth-input" id="reg-name" placeholder="Nama kamu...">
+      </div>
+
+      <div class="auth-input-group">
+        <label>Email</label>
+        <input type="email" class="auth-input" id="auth-email" placeholder="nama@email.com">
+      </div>
+
+      <div class="auth-input-group">
+      <label>Password</label>
+      <div style="position: relative; display: flex; align-items: center;">
+          <!-- Input Password dengan minimal huruf (minlength) -->
+          <input type="password" class="auth-input" id="auth-password" placeholder="••••••••" minlength="6" style="width: 100%; padding-right: 40px;">
+          
+          <!-- Tombol Ikon Mata -->
+          <span onclick="togglePasswordVisibility()" style="position: absolute; right: 12px; cursor: pointer; user-select: none; font-size: 16px;" id="toggle-pass-icon">
+          👁
+          </span>
+      </div>
+      <small style="color: #888; font-size: 11px; margin-top: 4px; display: block;">Minimal 6 karakter</small>
+  </div>
+
+      <div style="text-align: right; margin: 8px 0 15px 0;">
+        <a href="#" onclick="openResetPassword()" style="color: #666; font-size: 13px; text-decoration: underline;">
+          Lupa kata sandi?
+        </a>
+      </div>
+
+      <button class="auth-btn" id="auth-submit-btn" onclick="handleAuthSubmit()">Masuk</button>
+      
+      <div class="auth-switch" id="auth-switch-text">
+        Belum punya akun? <span onclick="toggleAuthMode()">Daftar di sini</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Splash Screen -->
+  <div id="splash-screen" onclick="closeSplash()">
+    <div class="splash-title">WELCOME TO JELSTUD</div>
+    <div class="splash-subtitle" id="welcome-user-text">Let's study Spanish</div>
+    <div class="swipe-instruction">↑ swipe to next</div>
+  </div>
+
+  <div class="navbar">
+    <div class="brand">JELSTUD <div class="brand-dot"></div></div>
+    <button class="btn-logout" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Keluar</button>
+  </div>
+
+  <div class="container">
+    <div class="streak-banner">
+      <div class="streak-info">
+        <div class="fire-icon-large">🔥</div>
+        <div>
+          <div class="streak-count" id="streak-count">1 Hari Berturut</div>
+          <div class="streak-status" id="streak-status">Pertahankan streak belajarmu hari ini!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 1: BACA -->
+    <div id="tab-baca" class="tab-content active">
+      <div id="stories-list">
+      <div class="baca-left-column">
+        <div class="section-title"><i class="fas fa-book-open"></i> Cerita Harian (2 Cerita / Hari)</div>
+        <div id="dynamic-stories-container"></div>
+
+        <!-- Kuis Pilihan Ganda Harian (5 Soal) -->
+        <div class="main-quiz-section">
+          <div class="section-title" style="margin-top:0; font-size:16px;"><i class="fas fa-question-circle"></i> Kuis Harian Spanyol (<span id="quiz-num">1</span>/5)</div>
+          <div class="quiz-question" id="main-quiz-q">Loading kuis...</div>
+          <div class="options-grid" id="main-quiz-options"></div>
+          <button class="btn-primary" id="quiz-btn" onclick="nextQuizQuestion()">Selanjutnya</button>
+          <div id="main-quiz-feedback" style="margin-top: 10px; font-size: 13px; font-weight: 700;"></div>
+        </div>
+      </div>
+      <div class="baca-right-column">
+        <!-- Bagian Edukasi Abjad & Huruf Vokal Spanyol -->
+    <div class="spanish-alphabet-section" style="margin-top: 30px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+      <h2 style="font-size: 18px; color: #333; margin-bottom: 12px; font-weight: bold;">
+        Abjad Spanyol
+      </h2>
+      <p style="font-size: 14px; color: #444; line-height: 1.6; margin-bottom: 15px;">
+        Di dalam bahasa Spanyol terdapat 27 huruf yang terdiri dari <strong>22 huruf konsonan</strong> dan <strong>5 huruf vokal</strong>.
+      </p>
+
+      <h3 style="font-size: 16px; color: #333; margin-bottom: 12px; font-weight: bold;">Huruf Vokal</h3>
+
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+          <thead>
+            <tr style="background-color: #f4f4f4; color: #333; border-bottom: 2px solid #ddd;">
+              <th style="padding: 10px; border: 1px solid #ddd;">Huruf</th>
+              <th style="padding: 10px; border: 1px solid #ddd;">Nama</th>
+              <th style="padding: 10px; border: 1px solid #ddd;">Cara pengucapan dan contoh kata</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Bb</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[be] dibaca be</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf B di kata bola<br><em style="color: #666;">bebé (bayi), blanco (putih), bolso (tas)</em></td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Cc</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[ce] dibaca tse atau se</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf K di kata kotak jika diikuti vokal A, O, U<br><em style="color: #666;">casa (rumah), color (warna), cuatro (empat)</em><br>[kasa, kolor, kuatro]<br><br>Seperti TS (di sebagian besar Spanyol, lidah sedikit keluar dan berada di antara gigi atas dan bawah) atau seperti huruf S jika diikuti vokal E, I<br><em style="color: #666;">cereal (sereal), cine (bioskop)</em><br>[tsereal/sereal, tsine/sine]</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Dd</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[de] dibaca de</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf D kuat ketika di awal kata atau setelah huruf "l" dan "N". Lidah menyentuh bagian belakang gigi seri atas sehingga udara tertahan sejenak sebelum dilepaskan.<br><em style="color: #666;">dama, falda, andar (wanita, rok, berjalan)</em><br><br>Seperti huruf D lembut ketika diapit huruf vokal. Lidah mendekati gigi seri atas tetapi tidak sampai menyentuhnya, sehingga udara tetap mengalir dengan lembut.<br><em style="color: #666;">codo, madera, boda (siku, kayu, pernikahan)</em><br><br>Diucapkan dengan sangat ringan saat terletak di akhir kata. Dalam percakapan cepat, huruf d di akhir kata sering dihilangkan atau terdengar seperti t yang sangat lembut.<br><em style="color: #666;">Verdad (kebenaran), pared (dinding), Madrid (Madrid)</em><br>[verda/verdat, pare/paret, Madri/Madrit]</td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Ff</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[efe] dibaca efe</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf F di kata foto<br><em style="color: #666;">familia (keluarga), flor (bunga), fresa (stroberi)</em></td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Gg</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[ge] dibaca he</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Huruf G dalam bahasa Spanyol memiliki dua bunyi utama, tergantung pada huruf yang mengikutinya.<br><br>Seperti huruf G di kata garam jika diikuti oleh vokal A, O, U<br><em style="color: #666;">gafas, gorro, guapo, pingüino, cigüeña, guerra, guitarra</em><br>[gafas, gorro, guapo, ptsiguino, tsiguenya, gerra, gitarra]<br>(kacamata, topi, tampan, penguin, bangau, perang, gitar)<br>gue/gui = huruf 'u' tidak dibaca<br>güe/güi = huruf 'u' dibaca<br><br>Seperti KH di kata khusus jika diikuti oleh vokal E, I<br><em style="color: #666;">ge, gi [khe, khi]</em><br><em style="color: #666;">gente (orang-orang), girasol (bunga matahari)</em><br>[khente, khirasol]</td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Hh</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[hache] dibaca ace</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Huruf H tidak diucapkan (bisu)<br><em style="color: #666;">hotel (hotel), humo (asap), hospital (rumah sakit)</em><br>[otel, umo, ospital]</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Jj</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[jota] dibaca hota</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf KH di kata khusus.<br><em style="color: #666;">ja, je, ji, jo, ju [kha, khe, khi, kho, khu]</em><br><em style="color: #666;">jaula (kandang), jefe (bos), jirafa (jerapah), joven (muda)</em><br>[khaula, khefe, khirafa, khoben]</td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Kk</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[ka] dibaca ka</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf K di kata kamu.<br>Dalam bahasa Spanyol, huruf "K" hampir tidak pernah muncul dalam kata asli. Huruf ini bukan bagian asli dari alfabet Latin kuno yang digunakan oleh orang Spanyol dulu. Jadi, kata-kata yang mengandung huruf K biasanya berasal dari bahasa lain seperti <em style="color: #666;">karate, kilómetro, kiwi</em>.</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Ll</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[ele] dibaca ele</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf L di kata lampu.<br><em style="color: #666;">lámpara (lampu), luz (cahaya), libro (buku)</em><br><br>Jika ditulis dobel menjadi LL, maka diucapkan seperti huruf [i griega]<br><em style="color: #666;">lluvia (hujan), estrella (bintang), llorar (menangis)</em><br>[yubia, estreya, yorar]</td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Mm</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[eme] dibaca eme</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf M di kata malam<br><em style="color: #666;">madre (ibu), miel (madu), maleta (koper)</em></td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Nn</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[ene] dibaca ene</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf N di kata nasi<br><em style="color: #666;">nube (awan), noche (malam), naranja (jeruk)</em></td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Ññ</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[eñe] dibaca enye</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti gabungan NY di kata minyak<br><em style="color: #666;">niño (anak laki-laki), uña (kuku), sueño (mimpi)</em><br>[ninyo, unya, sueno]</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Pp</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[pe] dibaca pe</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf P di kata pantai<br><em style="color: #666;">puerto (pintu), paraguas (payung), pastel (kue)</em></td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Qq</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[cu] dibaca ku</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Huruf cu dalam bahasa Spanyol selalu digunakan bersama huruf u, membentuk kombinasi qu. Huruf ini hampir selalu muncul di depan vokal e atau i, dan huruf u di sini tidak dibaca. Jadi, "que" dan "qui" dibaca seperti [ke] dan [ki]<br><em style="color: #666;">queso (keju), mosquito (nyamuk), parque (taman)</em><br>[keso, moskito, parke]</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Rr</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[erre] dibaca erre</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Diucapkan lembut dan cepat mirip bunyi R dalam bahasa Indonesia kalau kita bicara cepat, atau seperti R di kata arah. Terjadi di tengah kata, antara dua vokal.<br><em style="color: #666;">pero (tetapi), caro (mahal), para (untuk)</em><br><br>Diucapkan dengan getaran, lidah bergetar di langit-langit mulut, menghasilkan suara khas "rrr". Terjadi ketika ditulis "rr" di tengah kata dan ketika huruf r ada di awal kata (walau hanya ada satu r).<br><em style="color: #666;">perro (anjing), torre (menara), rojo (merah), rápido (cepat)</em></td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Ss</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[ese] dibaca ese</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf S di kata sambal<br><em style="color: #666;">sol (matahari), serpiente (ular), sandía (semangka)</em></td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Tt</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[te] dibaca te</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf T di kata tomat<br><em style="color: #666;">tomate (tomat), tiza (kapur), tigre (harimau)</em></td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Vv</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[uve] dibaca ube</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf B di kata bola<br><em style="color: #666;">vela (lilin), vida (kehidupan), verano (musim panas)</em><br>[bela, bida, berano]</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Ww</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[uve doble] dibaca ube doble</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf W di kata wiski.<br>Huruf W hanya muncul dalam kata serapan asing, bukan kata asli Spanyol. Jadi, kata yang mengandung huruf W biasanya berasal dari bahasa lain seperti <em style="color: #666;">whisky, wit, kiwi</em>.</td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Xx</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[equis] dibaca ekis</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Paling umum diucapkan [ks] (seperti "eks" dalam bahasa Indonesia). Tapi bunyinya bisa berubah tergantung posisi dan asal kata:<br>Di awal kata: <em style="color: #666;">xilófono [silofono] (xilofon)</em><br>Di tengah kata: <em style="color: #666;">éxito [eksito] (kesuksesan)</em><br>Kata dari bahasa asli Meksiko: <em style="color: #666;">México, Oaxaca [mekhiko, oakhaka]</em></td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Yy</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[i griega/ye] dibaca i griega/ye</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti huruf Y di kata yoyo atau kadang diucapkan seperti huruf J yang lembut. Di beberapa wilayah di negara dengan dialek español río platense seperti Argentina, Uruguay, dan Paraguay, kadang diucapkan seperti SH.<br><em style="color: #666;">yema (kuning telur), yate (perahu layar), yogur (yogurt)</em></td>
+            </tr>
+            <tr style="background-color: #fafafa;">
+              <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Zz</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">[zeta] dibaca tseta atau seta</td>
+              <td style="padding: 10px; border: 1px solid #ddd;">Seperti TS (di sebagian besar Spanyol) atau huruf S.<br><em style="color: #666;">za, zi, zu, ze, zo [tsa/sa, tsi/si, tsu/su, tse/se, tso/so]</em><br><em style="color: #666;">zapato (sepatu), zumo (jus), zorro (rubah)</em><br>[tsapato/sapato, tsumo/sumo, tsorro/sorro]</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+      </div>
+      </div>
+
+      <!-- Layar Bacaan Cerita -->
+      <div id="reader-view" class="reader-container">
+        <button class="btn-back" onclick="closeStory()"><i class="fas fa-arrow-left"></i> Kembali ke daftar</button>
+        <span class="badge-level" id="reader-level">Beginner</span>
+        <h2 id="reader-title" style="margin-bottom: 4px; color: var(--green-dark);">Judul</h2>
+        
+        <div class="reader-subtitle-trans" id="reader-subtitle-trans">Terjemahan ringkas...</div>
+        <div class="reading-text" id="reader-content"></div>
+
+        <div class="article-source-box">
+          <i class="fas fa-link"></i> Sumber Artikel Asli: <a href="#" id="article-link" target="_blank">Link Artikel</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: KOSAKATA -->
+    <div id="tab-kosakata" class="tab-content">
+      <div class="section-title"><i class="fas fa-spell-check"></i> Kamus Kosakata Penting</div>
+      <div class="vocab-grid">
+      <div class="vocab-search-wrapper">
+      <!-- Kotak Pencarian Kosakata -->
+    <div style="margin-bottom: 16px;">
+      <input type="text" id="vocab-search" placeholder="🔍 Cari kosakata Spanyol atau Indonesia..." oninput="filterVocab()" style="width: 100%; padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 14px; font-size: 14px; outline: none; background: var(--card-bg); color: var(--text-dark);">
+    </div>
+      </div>
+      
+      <div class="vocab-category-card">
+        <div class="vocab-cat-header" onclick="toggleVocab('cat-pronouns', event)">
+          <span>👥 Pronoun Words (Kata Ganti)</span> <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="vocab-list open" id="cat-pronouns"></div>
+      </div>
+
+      <div class="vocab-category-card">
+        <div class="vocab-cat-header" onclick="toggleVocab('cat-nouns', event)">
+          <span>🏠 Nouns (Kata Benda)</span> <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="vocab-list" id="cat-nouns"></div>
+      </div>
+
+      <div class="vocab-category-card">
+        <div class="vocab-cat-header" onclick="toggleVocab('cat-adjectives', event)">
+          <span>✨ Adjectives (Kata Sifat)</span> <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="vocab-list" id="cat-adjectives"></div>
+      </div>
+
+      <div class="vocab-category-card">
+        <div class="vocab-cat-header" onclick="toggleVocab('cat-verbs', event)">
+          <span>🏃 Verbs (Kata Kerja)</span> <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="vocab-list" id="cat-verbs"></div>
+      </div>
+
+      <div class="vocab-category-card">
+        <div class="vocab-cat-header" onclick="toggleVocab('cat-adverbs', event)">
+          <span>⏱️ Adverbs (Kata Keterangan)</span> <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="vocab-list" id="cat-adverbs"></div>
+      </div>
+
+      <div class="vocab-category-card">
+        <div class="vocab-cat-header" onclick="toggleVocab('cat-conjunctions', event)">
+          <span>🔗 Conjunctions (Kata Hubung)</span> <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="vocab-list" id="cat-conjunctions"></div>
+      </div>
+
+      <div class="vocab-category-card">
+        <div class="vocab-cat-header" onclick="toggleVocab('cat-prepositions', event)">
+          <span>📍 Prepositions (Kata Depan)</span> <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="vocab-list" id="cat-prepositions"></div>
+      </div>
+
+      <div class="vocab-category-card">
+        <div class="vocab-cat-header" onclick="toggleVocab('cat-interjections', event)">
+          <span>📣 Interjections (Kata Seru / Gaul)</span> <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="vocab-list" id="cat-interjections"></div>
+      </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: ULASAN -->
+    <div id="tab-ulasan" class="tab-content">
+      <div class="section-title"><i class="fas fa-clone"></i> Flashcard Kosakata Tersimpan</div>
+      <div class="flashcard" onclick="flipCard()" id="flashcard-box">
+        <div class="card-word" id="fc-word">Belum ada kartu</div>
+        <div class="card-meaning" id="fc-meaning">Klik kata di menu BACA untuk simpan kata baru!</div>
+        <span style="font-size: 11px; color: var(--text-muted); position: absolute; bottom: 15px;">Klik kartu untuk melihat arti</span>
+      </div>
+      <button class="btn-primary" onclick="nextCard()">Kartu Berikutnya <i class="fas fa-arrow-right"></i></button>
+    </div>
+
+    <!-- TAB 4: CATATAN -->
+    <div id="tab-catatan" class="tab-content">
+      <div class="section-title"><i class="fas fa-sticky-note"></i> CATATAN</div>
+      
+      <div class="grammar-note">
+        <div class="grammar-title">📌 FUNFACT BAHASA SPANYOL</div>
+        <div class="grammar-desc">
+          Bahasa Spanyol adalah salah satu bahasa yang <strong>paling banyak digunakan</strong> di dunia. Bahasa ini berkembang dari  bahasa latin yang digunakan oleh kekaisaran romawi, karena itu bahsa Spanyol memiliki banyak kemiripan dengan bahasa Italia, Prancis, dan Portugis.
+          <br><br>
+          Saat ini, bahasa Spanyol bukan hanya bahsa resmi di Spanyol, tetapi juga di <strong>20 negara lainnya</strong>, terutama di benua Amerika, dari Meksiko hingga Argentina. Dengan lebih dari 500 juta penutur asli, bahasa Spanyol bahasa ibu ketiga setelah bahasa Mandarin dan  bahasa Hindi. Selain itu, Spanyol adalah <strong>bahasa resmi kedua di PBB, Uni Eropa, dan banyak organisasi internasional lainnya</strong>.
+        </div>
+      </div>
+
+      <div class="grammar-note">
+        <div class="grammar-title">📌 Pengucapan Huruf 'LL'</div>
+        <div class="grammar-desc">
+          Gabungan huruf <strong>LL</strong> dalam bahasa Spanyol dibaca seperti huruf <strong>Y</strong> dalam bahasa Indonesia.
+          <br><br>
+          <em>Contoh:</em> Kata <strong>"Llamo"</strong> dibaca <em>"Yamo"</em>.
+        </div>
+      </div>
+
+      <div class="grammar-note">
+        <div class="grammar-title">📌Kenapa terdapat tanda tanya & seru terbalik (¿  , ¡)</div>
+        <div class="grammar-desc">
+          Dalam bahasa Spanyol, <strong>tanda tanya (¿ ?) dan tanda seru (¡ !)</strong> digunakan di awal dan di akhir kalimat. Tujuannya agar <strong>pembaca sudah tahu dari awal bahwa kalimat tersebut adalah pertanyaan atau seruan</strong>.
+          <br><br>
+          <em>Contoh:</em> <strong>¿Cómo te llamas?</strong> <em>(Siapa namamu?)</em>
+         <br> <em>Contoh:</em> <strong>¡Qué bonito!</strong> <em> (Indah sekali!)</em>
+        </div>
+      </div>
+
+      <div class="grammar-note">
+        <div class="grammar-title">📌Apa itu tilde (')</div>
+        <div class="grammar-note">
+          <div class="grammar-title">📌 Apa itu tilde (')</div>
+          Tilde adalah tanda aksen kecil di atas huruf vokal <strong>(á ,é ,í ,ó ,ú )</strong>. Fungsinya untuk <strong>penekanan suku kata</strong> atau <strong>membedakan arti kata</strong>.
+          <br><br>
+          <em>Contoh:</em> <strong>papa (kentang)</strong> ≠ <strong>papá (ayah)</strong>
+          <br> <strong> bebe (dia minum)</strong> ≠ <strong> bebé (bayi)</strong>
+        </div>
+    </div>
+  </div>
+
+  <!-- Popover Terjemahan -->
+  <div class="translation-popover" id="popover">
+    <div class="popover-toggle-group">
+      <button class="pop-btn-toggle active" id="btn-mode-word" onclick="setTranslateMode('word')">Kata</button>
+      <button class="pop-btn-toggle" id="btn-mode-sentence" onclick="setTranslateMode('sentence')">Kalimat</button>
+    </div>
+
+    <div class="popover-content-card">
+      <div class="pop-original-text" id="pop-original">Original text...</div>
+      <div class="pop-translated-text" id="pop-translated">Terjemahan...</div>
+      
+      <div class="pop-actions-row">
+        <button class="btn-audio-clean" onclick="speakCurrentText()"><i class="fas fa-volume-up"></i> Dengar</button>
+        <button class="btn-save-clean" onclick="saveCurrentWord()">Simpan Kartu</button>
+        <button class="btn-close-pop" onclick="closePopover()">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bot AI Amigo -->
+  <div class="bot-toggle" onclick="toggleChat()"><i class="fas fa-robot"></i></div>
+  <div class="chat-window" id="chat-window">
+    <div class="chat-header">
+      <span><i class="fas fa-robot"></i> Amigo Bot</span>
+      <i class="fas fa-times" style="cursor: pointer;" onclick="toggleChat()"></i>
+    </div>
+    <div class="chat-body" id="chat-body">
+      <div class="chat-msg msg-bot">¡Hola! Aku Amigo Bot. Tanya aku apa saja tentang kosakata atau aturan bahasa Spanyol!</div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" class="chat-input" id="chat-input" placeholder="Tanya sesuatu..." onkeypress="handleChatKey(event)">
+      <button class="chat-send" onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <div class="nav-item active" onclick="switchTab('baca', this)"><i class="fas fa-book"></i><span>BACA</span></div>
+    <div class="nav-item" onclick="switchTab('kosakata', this)"><i class="fas fa-spell-check"></i><span>KOSAKATA</span></div>
+    <div class="nav-item" onclick="switchTab('ulasan', this)"><i class="fas fa-layer-group"></i><span>ULASAN</span></div>
+    <div class="nav-item" onclick="switchTab('catatan', this)"><i class="fas fa-book-reader"></i><span>CATETAN</span></div>
+  </div>
+
+  <script>
+    // --- AUTHENTICATION LOGIC ---
+    let isRegisterMode = false;
+
+    function checkAuth() {
+      const loggedUser = localStorage.getItem('jelstud_logged_user');
+      if (loggedUser) {
+        document.getElementById('auth-screen').style.display = 'none';
+        document.getElementById('splash-screen').style.display = 'flex';
+        document.getElementById('welcome-user-text').innerText = `Halo, ${loggedUser}! Let's study Spanish`;
+        initializeApp();
+      } else {
+        document.getElementById('auth-screen').style.display = 'flex';
+        document.getElementById('splash-screen').style.display = 'none';
+      }
+    }
+
+    function toggleAuthMode() {
+      isRegisterMode = !isRegisterMode;
+      const title = document.getElementById('auth-form-title');
+      const subtitle = document.getElementById('auth-form-subtitle');
+      const nameGroup = document.getElementById('name-group');
+      const submitBtn = document.getElementById('auth-submit-btn');
+      const switchText = document.getElementById('auth-switch-text');
+      document.getElementById('auth-error').style.display = 'none';
+
+      if (isRegisterMode) {
+        title.innerText = "DAFTAR AKUN";
+        subtitle.innerText = "Buat akun baru untuk mulai belajar";
+        nameGroup.style.display = "block";
+        submitBtn.innerText = "Daftar";
+        switchText.innerHTML = `Sudah punya akun? <span onclick="toggleAuthMode()">Masuk di sini</span>`;
+      } else {
+        title.innerText = "JELSTUD";
+        subtitle.innerText = "Masuk untuk mulai belajar bahasa Spanyol";
+        nameGroup.style.display = "none";
+        submitBtn.innerText = "Masuk";
+        switchText.innerHTML = `Belum punya akun? <span onclick="toggleAuthMode()">Daftar di sini</span>`;
+      }
+    }
+
+    function handleAuthSubmit() {
+    const emailEl = document.getElementById('auth-email') || document.getElementById('login-email');
+    const passEl = document.getElementById('auth-password') || document.getElementById('login-password');
+    const errEl = document.getElementById('auth-error');
+
+    if (errEl) errEl.style.display = "none";
+
+    const email = emailEl ? emailEl.value.trim().toLowerCase() : "";
+    const password = passEl ? passEl.value.trim() : "";
+
+    // 1. Cek apakah input kosong
+    if (!email || !password) {
+        if (errEl) {
+            errEl.innerText = "Email dan password harus diisi!";
+            errEl.style.display = "block";
+        } else {
+            alert("Email dan password harus diisi!");
+        }
+        return;
+    }
+
+    // 2. Validasi Minimal 6 Karakter Kata Sandi
+    if (password.length < 6) {
+        if (errEl) {
+            errEl.innerText = "Password minimal harus 6 karakter!";
+            errEl.style.display = "block";
+        } else {
+            alert("Password minimal harus 6 karakter!");
+        }
+        return;
+    }
+
+    // Ambil data user dari Local Storage
+    let users = [];
+    try {
+        users = JSON.parse(localStorage.getItem('jelstud_users')) || [];
+    } catch (e) {
+        users = [];
+    }
+
+    if (typeof isRegisterMode !== 'undefined' && isRegisterMode) {
+        // --- MODE DAFTAR ---
+        const nameEl = document.getElementById('reg-name') || document.getElementById('auth-name');
+        const name = nameEl && nameEl.value.trim() ? nameEl.value.trim() : "Pengguna";
+
+        const existingIndex = users.findIndex(u => u.email.toLowerCase() === email);
+        if (existingIndex !== -1) {
+            users[existingIndex] = { name, email, password };
+        } else {
+            users.push({ name, email, password });
+        }
+
+        localStorage.setItem('jelstud_users', JSON.stringify(users));
+        localStorage.setItem('jelstud_logged_user', name);
+
+        alert("Pendaftaran berhasil! Silakan login.");
+        if (typeof toggleAuthMode === 'function') toggleAuthMode();
+    } else {
+        // --- MODE LOGIN ---
+        let found = users.find(u => u.email.toLowerCase() === email && u.password === password);
+
+        // Jika belum tersimpan di memori browser, simpan otomatis agar bisa masuk
+        if (!found) {
+            const defaultName = email.split('@')[0];
+            users.push({ name: defaultName, email: email, password: password });
+            localStorage.setItem('jelstud_users', JSON.stringify(users));
+            found = { name: defaultName, email: email, password: password };
+        }
+
+        localStorage.setItem('jelstud_logged_user', found.name);
+        alert("Login berhasil! Selamat datang kembali, " + found.name + " ✨");
+
+        if (typeof closeAuthModal === 'function') closeAuthModal();
+        if (typeof checkAuth === 'function') checkAuth();
+    }
+}
+
+    function handleLogout() {
+      localStorage.removeItem('jelstud_logged_user');
+      checkAuth();
+    }
+
+    // --- DATA KOSAKATA & CERITA ---
+    const vocabData = {
+      pronouns: [
+        { es: "se", id: "dirinya / nya" }, { es: "lo", id: "nya (objek laki-laki)" },
+        { es: "le", id: "kepadanya / Anda" }, { es: "me", id: "saya (objek)" },
+        { es: "él", id: "dia (laki-laki)" }, { es: "ella", id: "dia (perempuan)" },
+        { es: "te", id: "kamu (objek)" }, { es: "nosotros", id: "kami / kita" },
+        { es: "yo", id: "saya" }, { es: "tú", id: "kamu" }, { es: "sí", id: "diri sendiri" }, { es: "ti", id: "kamu (setelah kata depan)" }, { es: "conmigo", id: "bersamaku/dengan saya" }
+      ],
+      nouns: [
+        { es: "año", id: "tahun" }, { es: "país", id: "negara" },
+        { es: "tiempo", id: "waktu / cuaca" }, { es: "día", id: "hari" },
+        { es: "casa", id: "rumah" }, { es: "hombre", id: "pria" }, { es: "mujer", id: "wanita" }, { es: "caso", id: "kasus/hal" }, { es: "momento", id: "momen/saat" }, { es: "mundo", id: "dunia" }, { es: "cosa", id: "benda" }, { es: "gombierno", id: "pemerintah" }, { es: "lugar", id: "tempat" }, { es: "trabajo", id: "pekerjaan" }, { es: "forma", id: "bentuk / cara" }, { es: "estado", id: "negara / kondisi" }, { es: "grupo", id: "kelompok" }, { es: "punto", id: "titik / poin" }, { es: "niño", id: "anak-anak" }, { es: "ciudad", id: "kota" }, { es: "problema", id: "masalah" }, { es: "sistema", id: "sistem" }, { es: "presidente", id: "presiden" }, { es: "manera", id: "cara" }, { es: "historia", id: "sejarah / cerita" }, { es: "tipo", id: "tipe / jenis" }, { es: "millones", id: "juta" }, { es: "partido", id: "partai / pertandingan" }, { es: "mes", id: "bulan" }, { es: "noche", id: "malam" }, { es: "obra", id: "karya / pekerjaan" }, { es: "equipo", id: "tim / peralatan" }, { es: "proceso", id: "proses" }, { es: "veces", id: "kali (jamak)" }, { es: "cambio", id: "perubahan" }, { es: "hijo", id: "anak laki-laki" }, { es: "centro", id: "pusat" }, { es: "servicio", id: "layanan" }, { es: "empresa", id: "perusahaan" }, { es: "cuenta", id: "akun / rekening" }, { es: "mano", id: "tangan" }, { es: "nivel", id: "tingkat / level" }, { es: "proyecto", id: "proyek" }, { es: "gente", id: "orang-orang" }, { es: "agua", id: "air" }, { es: "hora", id: "jam / waktu" }, { es: "padre", id: "ayah" }, { es: "desarrollo", id: "pengembangan" }, { es: "semana", id: "minggu" }, { es: "lado", id: "sisi" }, { es: "familia", id: "keluarga" }, { es: "situación", id: "situasi" }, { es: "madre", id: "ibu" }, { es: "información", id: "informasi" }, { es: "fin", id: "akhir" }, { es: "programa", id: "program" }, { es: "salud", id: "kesehatan" }, { es: "cuerpo", id: "tubuh" }, { es: "actividad", id: "aktivitas" }, { es: "derecho", id: "hak / hukum" }, { es: "ejemplo", id: "contoh" }, { es: "libro", id: "buku" }, { es: "medio", id: "tengah / media" }, { es: "tema", id: "topik / tema" }, { es: "días", id: "hari-hari" }, { es: "ley", id: "hukum / undang-undang" }, { es: "hecho", id: "fakta" }, { es: "zona", id: "zona / wilayah" }, { es: "nombre", id: "nama" }, { es: "resultado", id: "hasil" }, { es: "número", id: "nomor / angka" }, { es: "final", id: "akhir / final" }, { es: "sector", id: "sektor" }, { es: "calle", id: "jalan" }, { es: "estudio", id: "studi / penelitian" }, { es: "puerta", id: "pintu" }, { es: "investigación", id: "penelitian" }, { es: "espacio", id: "ruang" }, { es: "sociedad", id: "masyarakat" }, { es: "acción", id: "tindakan" }, { es: "pueblo", id: "desa / rakyat" }, { es: "director", id: "direktur" }, { es: "realidad", id: "realitas" }, { es: "voz", id: "suara" }, { es: "producto", id: "produk" }, { es: "amigo", id: "teman" }, { es: "mercado", id: "pasar" }, { es: "cabeza", id: "kepala" }, { es: "población", id: "populasi" }, { es: "muerte", id: "kematian" }, { es: "minuto", id: "menit" }, { es: "tierra", id: "bumi / tanah" }, { es: "verdad", id: "kebenaran" }, { es: "sentido", id: "arti / rasa" }, { es: "hermano", id: "saudara" }, { es: "medida", id: "ukuran / langkah" }, { es: "seguridad", id: "keamanan" }, { es: "imagen", id: "gambar / citra" }, { es: "comunidad", id: "komunitas" }, { es: "poder", id: "kekuasaan" }, { es: "universidad", id: "universitas" }, { es: "uso", id: "penggunaan" }, { es: "razón", id: "alasan" }, { es: "organización", id: "organisasi" }, { es: "idea", id: "ide" }, { es: "educación", id: "pendidikan" }, { es: "paso", id: "langkah" }, { es: "área", id: "area" }, { es: "siglo", id: "abad" }, { es: "objetivo", id: "tujuan" }, { es: "dato", id: "data" }, { es: "posibilidad", id: "kemungkinan" }, { es: "producción", id: "produksi" }, { es: "joven", id: "pemuda" }, { es: "necesidad", id: "kebutuhan" }, { es: "policía", id: "polisi" }, { es: "especie", id: "spesies" }, { es: "camino", id: "jalan / jalur" }, { es: "plan", id: "rencana" }, { es: "arte", id: "seni" }, { es: "atención", id: "perhatian" }, { es: "ciento", id: "seratus" }, { es: "política", id: "politik / kebijakan" }, { es: "decisión", id: "keputusan" }, { es: "cultura", id: "budaya" }, { es: "luz", id: "cahaya" }, { es: "mayoría", id: "mayoritas" }, { es: "mañana", id: "pagi / besok" }, { es: "enfermedad", id: "penyakit" }, { es: "relación", id: "hubungan" }, { es: "juego", id: "permainan" }, { es: "campo", id: "lapangan / bidang" }, { es: "edad", id: "usia" }, { es: "experiencia", id: "pengalaman" }, { es: "riesgo", id: "risiko" }, { es: "fuerza", id: "kekuatan" }, { es: "calidad", id: "kualitas" }, { es: "ojos", id: "mata (jamak)" }, { es: "región", id: "wilayah" }, { es: "amor", id: "cinta" }, { es: "horas", id: "jam-jam" }, { es: "movimiento", id: "gerakan" }, { es: "palabra", id: "kata" }, { es: "guerra", id: "perang" }, { es: "dinero", id: "uang" }, { es: "capacidad", id: "kapasitas" }, { es: "autor", id: "penulis / pembuat" }, { es: "dólar", id: "dolar" }, { es: "precio", id: "harga" }, { es: "acuerdo", id: "perjanjian" }, { es: "cara", id: "wajah" }, { es: "control", id: "kontrol" }, { es: "modelo", id: "model" }, { es: "frente", id: "depan" }, { es: "tarde", id: "sore" }, { es: "autoridad", id: "otoritas" }, { es: "película", id: "film" }, { es: "línea", id: "garis" }, { es: "red", id: "jaringan" }, { es: "condiciones", id: "kondisi" }, { es: "falta", id: "kekurangan / kesalahan" }, { es: "peso", id: "berat" }, { es: "modo", id: "mode / cara" }, { es: "música", id: "musik" }, { es: "ministro", id: "menteri" }, { es: "fondo", id: "latar belakang / dana" }, { es: "base", id: "dasar / basis" }, { es: "orden", id: "pesanan / urutan" }, { es: "clase", id: "kelas" }, { es: "presencia", id: "kehadiran" }, { es: "función", id: "fungsi" }, { es: "mesa", id: "meja" }, { es: "actor", id: "aktor" }, { es: "respuesta", id: "jawaban" }, { es: "ocasión", id: "kesempatan" }, { es: "principio", id: "prinsip / awal" }, { es: "paciente", id: "pasien" }, { es: "efecto", id: "efek" }, { es: "diferencia", id: "perbedaan" }, { es: "señor", id: "tuan / bapak" }, { es: "papel", id: "kertas / peran" }, { es: "serie", id: "serial" }, { es: "manos", id: "tangan (jamak)" }, { es: "capital", id: "ibu kota / modal" }, { es: "fuente", id: "sumber / air mancur" }, { es: "duda", id: "keraguan" }, { es: "aspecto", id: "aspek" }, { es: "miembro", id: "anggota" }, { es: "compañía", id: "perusahaan" }, { es: "jefe", id: "bos / atasan" }, { es: "jugador", id: "pemain" }, { es: "vista", id: "pemandangan / penglihatan" }, { es: "cantidad", id: "jumlah" }, { es: "dirección", id: "alamat / arah" }, { es: "valor", id: "nilai" }, { es: "resto", id: "sisa" }, { es: "silencio", id: "keheningan" }, { es: "ex", id: "mantan" }, { es: "aire", id: "udara" }, { es: "metro", id: "metro / meter" }, { es: "teatro", id: "teater" }, { es: "apoyo", id: "dukungan" }, { es: "mirada", id: "tatapan" }, { es: "tecnología", id: "teknologi" }, { es: "personaje", id: "karakter" }, { es: "energía", id: "energi" }, { es: "viaje", id: "perjalanan" }, { es: "futuro", id: "masa depan" }, { es: "acto", id: "tindakan / acara" }, { es: "artista", id: "seniman" }, { es: "época", id: "era / periode" }, { es: "ministerio", id: "kementerian" }, { es: "sueño", id: "mimpi / kantuk" }, { es: "euro", id: "euro" }, { es: "causa", id: "penyebab" }, { es: "sitio", id: "tempat / situs" }, { es: "figura", id: "tokoh / bentuk" }, { es: "consejo", id: "nasihat / dewan" }, { es: "cargo", id: "jabatan / beban" }, { es: "profesor", id: "profesor / guru" }, { es: "propuesta", id: "proposal" }, { es: "cine", id: "bioskop" }, { es: "escuela", id: "sekolah" }, { es: "ojo", id: "mata" }, { es: "público", id: "publik" }, { es: "objeto", id: "objek" }, { es: "recursos", id: "sumber daya" }, { es: "tratamiento", id: "pengobatan / perawatan" }, { es: "compañero", id: "rekan" }, { es: "libertad", id: "kebebasan" }, { es: "participación", id: "partisipasi" }, { es: "asunto", id: "subjek / urusan" }, { es: "interés", id: "minat / bunga" }, { es: "unidad", id: "unit / satuan" }, { es: "banco", id: "bank / bangku" }, { es: "vuelta", id: "putaran / kembali" }, { es: "posición", id: "posisi" }, { es: "carrera", id: "karir / balapan" }, { es: "palabras", id: "kata-kata" }, { es: "planta", id: "tanaman / lantai" }, { es: "práctica", id: "praktik" }, { es: "esfuerzo", id: "usaha / upaya" }, { es: "comunicación", id: "komunikasi" }, { es: "comisión", id: "komisi" }, { es: "economía", id: "ekonomi" }, { es: "ser", "id": "makhluk" }, { es: "análisis", id: "analisis" }, { es: "pie", id: "kaki / catatan kaki" }, { es: "relaciones", id: "hubungan (jamak)" }, { es: "conocimiento", id: "pengetahuan" }, { es: "crisis", id: "krisis" }, { es: "premio", id: "penghargaan" }, { es: "encuentro", id: "pertemuan" }, { es: "conjunto", id: "himpunan / set" }, { es: "consecuencia", id: "konsekuensi" }, { es: "suelo", id: "tanah / lantai" }, { es: "década", id: "dekade" }, { es: "texto", id: "teks" }, { es: "miedo", id: "ketakutan" }, { es: "estudiante", id: "siswi / siswa" }, { es: "título", id: "judul / gelar" }, { es: "origen", id: "asal" }, { es: "médico", id: "dokter" }, { es: "formación", id: "pelatihan" }, { es: "fecha", id: "tanggal" }, { es: "boca", id: "mulut" }, { es: "sol", id: "matahari" }, { es: "éxito", id: "kesuksesan" }, { es: "entrada", id: "pintu masuk / tiket" }, { es: "sala", id: "ruangan" }, { es: "crecimiento", id: "pertumbuhan" }, { es: "reunión", id: "rapat / pertemuan" }, { es: "animal", id: "hewan" }, { es: "informe", id: "laporan" }, { es: "hospital", id: "rumah sakit" }, { es: "importancia", id: "pentingnya" }, { es: "negocio", id: "bisnis" }, { es: "mar", id: "laut" }, { es: "consumo", id: "konsumsi" }, { es: "artículo", id: "artikel" }, { es: "prensa", id: "pers / media" }, { es: "carta", id: "surat" }, { es: "departamento", id: "departemen" }, { es: "material", id: "bahan / material" }, { es: "estrategia", id: "strategi" }, { es: "construcción", id: "konstruksi" }, { es: "televisión", id: "televisi" }, { es: "color", id: "warna" }, { es: "estructura", id: "struktur" }, { es: "cabo", id: "tanjung / ujung" }
+      ],
+      adjectives: [
+        { es: "bueno", id: "bagus / baik" }, { es: "grande", id: "besar" },
+        { es: "pequeño", id: "kecil" }, { es: "alto", id: "tinggi" }, { es: "importante", id: "penting" }, { es: "nuevo", id: "baru" }, { es: "grande", id: "besar" }, { es: "bueno", id: "bagus / baik" }, { es: "último", id: "terakhir" }, { es: "mayor", id: "lebih besar / utama" }, { es: "nacional", id: "nasional" }, { es: "social", id: "sosial" }, { es: "mejor", id: "lebih baik" }, { es: "propio", id: "milik sendiri" }, { es: "importante", id: "penting" }, { es: "público", id: "publik" }, { es: "alto", id: "tinggi" }, { es: "político", id: "politik" }, { es: "pequeño", id: "kecil" }, { es: "único", id: "unik / satu-satunya" }, { es: "largo", id: "panjang" }, { es: "humano", id: "manusia" }, { es: "económico", id: "ekonomi" }, { es: "posible", id: "mungkin" }, { es: "general", id: "umum" }, { es: "internacional", id: "internasional" }, { es: "diferente", id: "berbeda" }, { es: "solo", id: "sendiri / hanya" }, { es: "español", id: "Spanyol" }, { es: "principal", id: "utama" }, { es: "necesario", id: "diperlukan" }, { es: "próximo", id: "berikutnya / dekat" }, { es: "distinto", id: "berbeda" }, { es: "claro", id: "terang / jelas" }, { es: "siguiente", id: "berikutnya" }, { es: "malo", id: "buruk / jahat" }, { es: "anterior", id: "sebelumnya" }, { es: "especial", id: "spesial" }, { es: "natural", id: "alami" }, { es: "cultural", id: "budaya" }, { es: "bajo", id: "rendah" }, { es: "actual", id: "saat ini" }, { es: "blanco", id: "putih" }, { es: "fuerte", id: "kuat" }, { es: "difícil", id: "sulit" }, { es: "mundial", id: "dunia" }, { es: "menor", id: "lebih kecil / minor" }, { es: "viejo", id: "tua" }, { es: "real", id: "nyata / kerajaan" }, { es: "local", id: "lokal" }, { es: "negro", id: "hitam" }, { es: "europeo", id: "Eropa" }, { es: "diverso", id: "beragam" }, { es: "libre", id: "bebas" }, { es: "seguro", id: "aman / pasti" }, { es: "común", id: "umum / biasa" }, { es: "privado", id: "swasta / pribadi" }, { es: "central", id: "pusat" }, { es: "popular", id: "populer" }, { es: "dicho", id: "tersebut" }, { es: "físico", id: "fisik" }, { es: "superior", id: "atas / unggul" }, { es: "joven", id: "muda" }, { es: "personal", id: "pribadi" }, { es: "capaz", id: "mampu" }, { es: "antiguo", id: "kuno / lama" }, { es: "histórico", id: "bersejarah" }, { es: "cierto", id: "tentu / benar" }, { es: "técnico", id: "teknis" }, { es: "presente", id: "saat ini / hadir" }, { es: "oficial", id: "resmi" }, { es: "mexicano", id: "Meksiko" }, { es: "fácil", id: "mudah" }, { es: "militar", id: "militer" }, { es: "contrario", id: "berlawanan" }, { es: "civil", id: "sipil" }, { es: "verdadero", id: "benar / asli" }, { es: "lleno", id: "penuh" }, { es: "suficiente", id: "cukup" }, { es: "rápido", id: "cepat" }, { es: "científico", id: "ilmiah" }, { es: "directo", id: "langsung" }, { es: "completo", id: "lengkap" }, { es: "interno", id: "internal" }, { es: "fundamental", id: "mendasar" }, { es: "comercial", id: "komersial" }, { es: "familiar", id: "keluarga" }, { es: "amplio", id: "luas" }, { es: "educativo", id: "pendidikan" }, { es: "vivo", id: "hidup" }, { es: "similar", id: "serupa" }, { es: "rojo", id: "merah" }, { es: "financiero", id: "keuangan" }, { es: "medio", id: "sedang" }, { es: "enorme", id: "sangat besar" }, { es: "total", id: "total" }, { es: "profesional", id: "profesional" }, { es: "adecuado", id: "sesuai" }, { es: "grave", id: "serius / parah" }, { es: "tradicional", id: "tradisional" }, { es: "electoral", id: "pemilu" }, { es: "básico", id: "dasar" }, { es: "igual", id: "sama" }, { es: "duro", id: "keras" }, { es: "profundo", id: "dalam" }, { es: "municipal", id: "kotamadya" }, { es: "inmediato", id: "segera" }, { es: "junto", id: "bersama" }, { es: "argentino", id: "Argentina" }, { es: "peor", id: "lebih buruk" }, { es: "francés", id: "Prancis" }, { es: "corto", id: "pendek" }, { es: "oscuro", id: "gelap" }, { es: "estadounidense", id: "Amerika Serikat" }, { es: "cercano", id: "dekat" }, { es: "regional", id: "regional" }, { es: "feliz", id: "bahagia" }, { es: "positivo", id: "positif" }, { es: "máximo", id: "maksimum" }, { es: "serio", id: "serius" }, { es: "laboral", id: "tenaga kerja" }, { es: "imposible", id: "tidak mungkin" }, { es: "simple", id: "sederhana" }, { es: "pobre", id: "miskin" }, { es: "reciente", id: "terbaru" }, { es: "extraño", id: "aneh" }, { es: "ambiental", id: "lingkungan" }, { es: "específico", id: "spesifik" }, { es: "normal", id: "normal" }, { es: "determinado", id: "tertentu" }, { es: "moderno", id: "modern" }, { es: "urbano", id: "perkotaan" }, { es: "mínimo", id: "minimum" }, { es: "musical", id: "musik" }, { es: "deportivo", id: "olahraga" }, { es: "federal", id: "federal" }, { es: "frío", id: "dingin" }, { es: "legal", id: "hukum" }, { es: "verde", id: "hijau" }, { es: "interesante", id: "menarik" }, { es: "artístico", id: "artistik" }, { es: "judicial", id: "peradilan" }, { es: "particular", id: "khusus" }, { es: "colombiano", id: "Kolombia" }, { es: "previo", id: "sebelumnya" }, { es: "cubano", id: "Kuba" }, { es: "pleno", id: "penuh" }, { es: "eléctrico", id: "listrik" }, { es: "tecnológico", id: "teknologi" }, { es: "abierto", id: "terbuka" }, { es: "global", id: "global" }, { es: "infantil", id: "anak-anak" }, { es: "absoluto", id: "mutlak" }, { es: "definitivo", id: "definitif" }, { es: "complejo", id: "kompleks" }, { es: "estatal", id: "negara" }, { es: "rico", id: "kaya / kaya rasa" }, { es: "raro", id: "langka / aneh" }, { es: "significativo", id: "signifikan" }, { es: "sencillo", id: "sederhana" }, { es: "perfecto", id: "sempurna" }, { es: "permanente", id: "permanen" }, { es: "religioso", id: "religius" }, { es: "activo", id: "aktif" }, { es: "famoso", id: "terkenal" }, { es: "numeroso", id: "banyak" }, { es: "rural", id: "pedesaan" }, { es: "tranquilo", id: "tenang" }, { es: "extranjero", id: "asing" }, { es: "democrático", id: "demokratis" }, { es: "azul", id: "biru" }, { es: "femenino", id: "wanita / feminin" }, { es: "escaso", id: "langka" }, { es: "intenso", id: "intens" }, { es: "puro", id: "murni" }, { es: "unido", id: "bersatu" }, { es: "universitario", id: "akademis" }, { es: "original", id: "asli" }, { es: "exterior", id: "luar" }, { es: "seco", id: "kering" }, { es: "digital", id: "digital" }, { es: "alemán", id: "Jerman" }, { es: "literario", id: "sastra" }, { es: "independiente", id: "independen" }, { es: "armado", id: "bersenjata" }, { es: "sanitario", id: "kesehatan" }, { es: "electrónico", id: "elektronik" }, { es: "indígena", id: "pribumi" }, { es: "concreto", id: "konkret" }, { es: "fiscal", id: "fiskal" }, { es: "clásico", id: "klasik" }, { es: "evidente", id: "jelas" }, { es: "individual", id: "individu" }, { es: "colectivo", id: "kolektif" }, { es: "negativo", id: "negatif" }, { es: "productivo", id: "produktif" }, { es: "doble", id: "ganda" }, { es: "anual", id: "tahunan" }, { es: "efectivo", id: "efektif" }, { es: "habitual", id: "biasa" }, { es: "inicial", id: "awal" }, { es: "débil", id: "lemah" }
+      ],
+      verbs: [
+        { es: "ser", id: "adalah (permanen)" }, { es: "estar", id: "berada / ada" }, { es: "tener", id: "memiliki" }, { es: "hacer", id: "membuat / melakukan" }, { es: "poder", id: "bisa / mampu" }, { es: "decir", id: "mengatakan" }, { es: "haber", id: "ada (bantu)" }, { es: "ir", id: "pergi" }, { es: "dar", id: "memberi" }, { es: "ver", id: "melihat" }, { es: "saber", id: "mengetahui" }, { es: "pasar", id: "lewat / terjadi" }, { es: "deber", id: "harus" }, { es: "querer", id: "ingin / mau" }, { es: "llegar", id: "tiba" }, { es: "dejar", id: "meninggalkan" }, { es: "llevar", id: "membawa" }, { es: "encontrar", id: "menemukan" }, { es: "seguir", id: "mengikuti" }, { es: "poner", id: "menempatkan" }, { es: "quedar", id: "tinggal / tersisa" }, { es: "parecer", id: "tampak" }, { es: "hablar", id: "berbicara" }, { es: "pensar", id: "berpikir" }, { es: "volver", id: "kembali" }, { es: "conocer", id: "mengenal" }, { es: "salir", id: "keluar" }, { es: "realizar", id: "melakukan" }, { es: "tomar", id: "mengambil / minum" }, { es: "tratar", id: "mencoba / memperlakukan" }, { es: "contar", id: "menghitung / menceritakan" }, { es: "llamar", id: "memanggil / menelpon" }, { es: "venir", id: "datang" }, { es: "mirar", id: "melihat" }, { es: "presentar", id: "menyajikan" }, { es: "permitir", id: "diizinkan" }, { es: "esperar", id: "menunggu" }, { es: "sentir", id: "merasakan" }, { es: "vivir", id: "hidup" }, { es: "buscar", id: "mencari" }, { es: "creer", id: "percaya" }, { es: "crear", id: "membuat" }, { es: "perder", id: "kalah / kehilangan" }, { es: "existir", id: "ada" }, { es: "considerar", id: "mempertimbangkan" }, { es: "abrir", id: "membuka" }, { es: "trabajar", id: "bekerja" }, { es: "recibir", id: "menerima" }, { es: "mantener", id: "menjaga" }, { es: "explicar", id: "menjelaskan" }, { es: "lograr", id: "mencapai" }, { es: "empezar", id: "memulai" }, { es: "recordar", id: "mengingat" }, { es: "comenzar", id: "memulai" }, { es: "pedir", id: "meminta" }, { es: "preguntar", id: "bertanya" }, { es: "producir", id: "menghasilkan" }, { es: "convertir", id: "mengubah" }, { es: "entrar", id: "masuk" }, { es: "mostrar", id: "menunjukkan" }, { es: "señalar", id: "menunjuk" }, { es: "escribir", id: "menulis" }, { es: "utilizar", id: "menggunakan" }, { es: "entender", id: "memahami" }, { es: "terminar", id: "menyelesaikan" }, { es: "ganar", id: "menang" }, { es: "incluir", id: "termasuk" }, { es: "morir", id: "meninggal" }, { es: "asegurar", id: "amankan" }, { es: "ocurrir", id: "terjadi" }, { es: "ofrecer", id: "menawarkan" }, { es: "jugar", id: "bermain" }, { es: "gustar", id: "menyukai" }, { es: "escuchar", id: "mendengarkan" }, { es: "sentar", id: "duduk" }, { es: "cambiar", id: "mengubah" }, { es: "aparecer", id: "muncul" }, { es: "acabar", id: "mengakhiri" }, { es: "decidir", id: "memutuskan" }, { es: "resultar", id: "berhasil" }, { es: "caer", id: "jatuh" }, { es: "desarrollar", id: "mengembangkan" }, { es: "necesitar", id: "membutuhkan" }, { es: "sacar", id: "mengeluarkan" }, { es: "establecer", id: "mendirikan" }, { es: "conseguir", id: "mendapatkan" }, { es: "indicar", id: "menunjukkan" }, { es: "formar", id: "membentuk" }, { es: "reconocer", id: "mengenali" }, { es: "dirigir", id: "mengarahkan" }, { es: "servir", id: "melayani" }, { es: "alcanzar", id: "mencapai" }, { es: "intentar", id: "mencoba" }, { es: "cumplir", id: "memenuhi" }, { es: "leer", id: "membaca" }, { es: "obtener", id: "mendapatkan" }, { es: "ayudar", id: "membantu" }, { es: "usar", id: "menggunakan" }, { es: "observar", id: "mengamati" }, { es: "responder", id: "menjawab" }, { es: "afirmar", id: "klaim / menegaskan" }, { es: "evitar", id: "menghindari" }, { es: "suponer", id: "mengasumsikan" }, { es: "afectar", id: "mempengaruhi" }, { es: "generar", id: "menghasilkan" },{ es: "continuar", id: "melanjutkan" }, { es: "cerrar", id: "menutup" }, { es: "pagar", id: "membayar" }, { es: "acercar", id: "mendekatkan" }, { es: "levantar", id: "mengangkat" }, { es: "participar", id: "berpartisipasi" }, { es: "representar", id: "mewakili" }, { es: "tocar", id: "menyentuh" }, { es: "informar", id: "menginformasikan" }, { es: "destacar", id: "menyoroti" }, { es: "iniciar", id: "memulai" }, { es: "dedicar", id: "mendedikasikan" }, { es: "oír", id: "mendengar" }, { es: "acompañar", id: "menemani" }, { es: "referir", id: "merujuk" }, { es: "sufrir", id: "menderita" }, { es: "nacer", id: "lahir" }, { es: "comer", id: "makan" }, { es: "bajar", id: "mengunduh / turun" }, { es: "suceder", id: "terjadi" }, { es: "dormir", id: "tidur" }, { es: "preparar", id: "menyiapkan" }, { es: "agregar", id: "menambahkan" }, { es: "correr", id: "berlari" }, { es: "subir", id: "naik" }, { es: "publicar", id: "menerbitkan" }, { es: "traer", id: "membawa" }, { es: "anunciar", id: "mengumumkan" }, { es: "descubrir", id: "menemukan" }, { es: "construir", id: "membangun" }, { es: "detener", id: "hentikan" }, { es: "aceptar", id: "menerima" }, { es: "meter", id: "memasukkan" }, { es: "ocupar", id: "menempati" }, { es: "demostrar", id: "tunjukkan" }, { es: "proponer", id: "mengusulkan" }, { es: "estudiar", id: "belajar" }, { es: "comprar", id: "membeli" }, { es: "expresar", id: "mengekspresikan" }, { es: "olvidar", id: "lupa" }, { es: "aumentar", id: "meningkatkan" }, { es: "definir", id: "definisi" }, { es: "regresar", id: "kembali" }, { es: "añadir", id: "menambahkan" }, { es: "mover", id: "memindahkan" }, { es: "entregar", id: "menyampaikan" }, { es: "sostener", id: "memegang" }, { es: "reducir", id: "mengurangi" }, { es: "aprender", id: "belajar" }, { es: "provocar", id: "memicu" }, { es: "mejorar", id: "meningkatkan" }, { es: "unir", id: "bergabung" }, { es: "constituir", id: "membentuk" }, { es: "compartir", id: "berbagi" }, { es: "enfrentar", id: "menghadapi" }, { es: "imaginar", id: "membayangkan" }, { es: "crecer", id: "tumbuh" }, { es: "comprender", id: "memahami" }, { es: "apoyar", id: "mendukung" }, { es: "comentar", id: "berkomentar" }, { es: "vender", id: "menjual" }, { es: "faltar", id: "melewati" }, { es: "aplicar", id: "menerapkan" }, { es: "colocar", id: "menempatkan" }, { es: "cubrir", id: "menutupi" }, { es: "repetir", id: "mengulangi" }, { es: "disponer", id: "mengatur" }, { es: "obligar", id: "memaksa" }, { es: "celebrar", id: "merayakan" }, { es: "echar", id: "melempar keluar" }, { es: "relacionar", id: "menghubungkan" }, { es: "marcar", id: "tandai" }, { es: "desear", id: "keinginan" }, { es: "significar", id: "berarti" }, { es: "caminar", id: "berjalan" }, { es: "superar", id: "melampaui" }, { es: "organizar", id: "mengatur" }, { es: "registrar", id: "mendaftar" }, { es: "andar", id: "berjalan" }, { es: "identificar", id: "mengidentifikasi" }, { es: "elegir", id: "memilih" }, { es: "abandonar", id: "meninggalkan" }, { es: "soler", id: "terbiasa" }, { es: "plantear", id: "menaikkan" }, { es: "ubicar", id: "menemukan lokasi" }, { es: "requerir", id: "minta" }, { es: "partir", id: "mulai" }, { es: "reunir", id: "mengumpulkan" }, { es: "actuar", id: "bertindak" }, { es: "lanzar", id: "peluncuran" }, { es: "importar", id: "impor / penting" }, { es: "analizar", id: "menganalisis" }, { es: "mencionar", id: "menyebutkan" }, { es: "sumar", id: "menambahkan" }, { es: "pretender", id: "berpura-pura" }, { es: "enviar", id: "kirim" }, { es: "declarar", id: "menyatakan" }, { es: "manifestar", id: "berwujud" }, { es: "atender", id: "menghadiri" }, { es: "basar", id: "basis" }, { es: "recuperar", id: "mengambil" }, { es: "aprovechar", id: "memanfaatkan" }, { es: "asumir", id: "mengasumsikan" }, { es: "desaparecer", id: "hilang" }, { es: "funcionar", id: "bekerja" }, { es: "permanecer", id: "tinggal" }, { es: "preocupar", id: "perhatian" }, { es: "preferir", id: "memilih" }, { es: "confirmar", id: "konfirmasi" }, { es: "advertir", id: "memperingatkan" }, { es: "imponer", id: "mengenakan" }, { es: "integrar", id: "mengintegrasikan" }, { es: "recoger", id: "jemput" }, { es: "parar", id: "berhenti" }, { es: "proteger", id: "melindungi" }, { es: "depender", id: "tergantung" }, { es: "negar", id: "menolak" }, { es: "resolver", id: "memecahkan" }, { es: "surgir", id: "timbul" }, { es: "corresponder", id: "sesuai" }, { es: "determinar", id: "menentukan" }, { es: "concluir", id: "menyimpulkan" }, { es: "visitar", id: "mengunjungi" }, { es: "exigir", id: "permintaan" }, { es: "contener", id: "berisi" }, { es: "aprobar", id: "menyetujui" }, { es: "romper", id: "istirahat / memecahkan" }, { es: "viajar", id: "bepergian" }, { es: "quitar", id: "menghapus" }, { es: "interesar", id: "bunga / berminat" }, { es: "defender", id: "membela" }, { es: "avanzar", id: "kemajuan" }, { es: "prever", id: "meramalkan" }, { es: "implicar", id: "melibatkan" }, { es: "apuntar", id: "menunjukkan" }, { es: "invitar", id: "mengundang" }, { es: "causar", id: "sebab" }, { es: "vestir", id: "gaun" }, { es: "controlar", id: "periksa" }, { es: "adquirir", id: "pembelian" }, { es: "incorporar", id: "menggabungkan" }, { es: "guardar", id: "menyimpan" }, { es: "insistir", id: "beste" }, { es: "conducir", id: "berkendara" }, { es: "acordar", id: "setuju" }, { es: "contestar", id: "menjawab" }, { es: "tirar", id: "buang" }, { es: "despertar", id: "bangun" }, { es: "reír", id: "tertawa" }, { es: "sorprender", id: "mengejutkan" }, { es: "llorar", id: "menangis" }, { es: "situar", id: "menemukan" }, { es: "garantizar", id: "menjamin" }, { es: "separar", id: "terpisah" }, { es: "impedir", id: "mencegah" }, { es: "gritar", id: "berteriak" }, { es: "costar", id: "biaya" }, { es: "cruzar", id: "menyeberang" }, { es: "disfrutar", id: "nikmati" }, { es: "cantar", id: "menyanyi" }, { es: "citar", id: "kutipan" }, { es: "sonreír", id: "tersenyum" }, { es: "extender", id: "memperpanjang" }, { es: "poseer", id: "sendiri" }, { es: "contribuir", id: "berkontribusi" }, { es: "exponer", id: "pameran" }, { es: "instalar", id: "memasang" }, { es: "notar", id: "catatan" }, { es: "sonar", id: "suara" }, { es: "convencer", id: "meyakinkan" }, { es: "mandar", id: "kirim" }, { es: "asociar", id: "tautan" }, { es: "aportar", id: "memberikan" }, { es: "acudir", id: "pergi ke" }, { es: "asistir", id: "hadir" }, { es: "firmar", id: "menandatangani" }, { es: "pertenecer", id: "milik" }, { es: "solicitar", id: "permintaan" }, { es: "enseñar", id: "menunjukkan" }, { es: "cortar", id: "memotong" }, { es: "recorrer", id: "tur" }, { es: "fijar", id: "posting" }, { es: "promover", id: "mempromosikan" }, { es: "describir", id: "menjelaskan" }, { es: "revelar", id: "mengungkapkan" }, { es: "retirar", id: "menarik" }, { es: "contemplar", id: "melihat" }, { es: "elaborar", id: "mengelaborasi" }, { es: "ordenar", id: "pesanan" }, { es: "hallar", id: "menemukan" }, { es: "reflejar", id: "mencerminkan" }, { es: "limitar", id: "batas" }, { es: "rodear", id: "mengelilingi" }, { es: "transformar", id: "mengubah" }, { es: "interpretar", id: "menafsirkan" }, { es: "llenar", id: "mengisi" }, { es: "consistir", id: "terdiri dari" }, { es: "cuidar", id: "perawatan" }, { es: "someter", id: "Kirim" }, { es: "avisar", id: "memperingatkan" }, { es: "emplear", id: "menggunakan" }
+      ],
+      adverbs: [
+      { es: "no", id: "tidak" }, { es: "más", id: "lebih" }, { es: "apenas", id: "hampir tidak" }, { es: "también", id: "juga" }, { es: "ya", id: "sudah" }, { es: "muy", id: "sangat" }, { es: "básicamente", id: "pada dasarnya" }, { es: "solo", id: "hanya" }, { es: "después", id: "kemudian" }, { es: "ahora", id: "sekarang" }, { es: "así", id: "jadi" }, { es: "bien", id: "baik" }, { es: "siempre", id: "selalu" }, { es: "antes", id: "sebelum" }, { es: "tan", id: "jadi" }, { es: "cómo", id: "bagaimana" }, { es: "sí", id: "ya" }, { es: "hoy", id: "hari ini" }, { es: "entonces", id: "kemudian" }, { es: "luego", id: "lalu" }, { es: "además", id: "selain itu" }, { es: "nunca", id: "tidak pernah" }, { es: "casi", id: "hampir" }, { es: "poco", id: "sedikit" }, { es: "aquí", id: "di sini" }, { es: "menos", id: "kurang" }, { es: "tanto", id: "begitu banyak" }, { es: "sin embargo", id: "namun" }, { es: "mucho", id: "banyak" }, { es: "aún", id: "masih" }, { es: "dentro", id: "di dalam" }, { es: "ayer", id: "kemarin" }, { es: "allí", id: "di sana" }, { es: "incluso", id: "bahkan" }, { es: "ahí", id: "di situ" }, { es: "ruidosamente", id: "dengan keras" }, { es: "todavía", id: "masih" }, { es: "hasta", id: "bahkan" }, { es: "tampoco", id: "juga tidak" }, { es: "cerca", id: "dekat" }, { es: "allá", id: "di sana" }, { es: "a lo mejor", id: "mungkin" }, { es: "cuidadosamente", id: "hati-hati" }, { es: "pronto", id: "segera" }, { es: "normalmente", id: "biasanya" },  { es: "fuera", id: "di luar" }, { es: "atrás", id: "di belakang" }, { es: "encima", id: "di atas" }, { es: "tarde", id: "sore" }, { es: "finalmente", id: "akhirnya" }, { es: "especialmente", id: "khususnya" }, { es: "tal vez", id: "mungkin" }, { es: "lejos", id: "jauh" }, { es: "demasiado", id: "terlalu" }, { es: "quizá", id: "mungkin" }, { es: "mal", id: "buruk" }, { es: "perfectamente", id: "sempurna" }, { es: "bastante", id: "cukup banyak" }, { es: "diariamente", id: "setiap hari" }, { es: "adelante", id: "ke depan" }, { es: "detrás", id: "kembali" }, { es: "igual", id: "demikian pula" }, { es: "ni siquiera", id: "bahkan tidak" }, { es: "primero", id: "pertama" }, { es: "actualmente", id: "saat ini" }, { es: "así como", id: "serta" }, { es: "precisamente", id: "tepatnya" }, { es: "arriba", id: "naik" }, { es: "realmente", id: "sebenarnya" }, { es: "jamás", id: "tidak pernah" }, { es: "quizás", id: "mungkin" }, { es: "recién", id: "baru saja" }, { es: "asimismo", id: "juga" }, { es: "no obstante", id: "namun" }, { es: "difícilmente", id: "dengan kesusahan" }, { es: "alrededor", id: "sekitar" }, { es: "solamente", id: "hanya" }, { es: "aun", id: "bahkan" }, { es: "por supuesto", id: "tentu saja" }, { es: "delante", id: "di depan" }, { es: "abajo", id: "di bawah" }, { es: "para nada", id: "sama sekali tidak" }, { es: "fácilmente", id: "dengan mudah" }, { es: "simplemente", id: "cukup" }, { es: "directamente", id: "langsung" }, { es: "lentamente", id: "perlahan" }, { es: "debajo", id: "di bawah" }, { es: "por tanto", id: "oleh karena itu" }, { es: "principalmente", id: "terutama" }, { es: "por lo tanto", id: "oleh karena itu" }, { es: "totalmente", id: "total" }, { es: "a menudo", id: "sering" }, { es: "por lo menos", id: "setidaknya" }, { es: "acá", id: "di sini" }, { es: "probablemente", id: "mungkin" }, { es: "prácticamente", id: "praktis" }, { es: "seguramente", id: "tentu saja" }, { es: "frecuentemente", id: "sering" }, { es: "aproximadamente", id: "kira-kira" }, { es: "completamente", id: "sepenuhnya" }, { es: "posteriormente", id: "kemudian" }, { es: "nuevamente", id: "lagi" }, { es: "por fin", id: "akhirnya" }, { es: "igualmente", id: "sama" }, { es: "acaso", id: "mungkin" }, { es: "justo", id: "adil / baru saja" }, { es: "recientemente", id: "baru-baru ini" }, { es: "por favor", id: "tolong" }, { es: "rápidamente", id: "dengan cepat" }, { es: "únicamente", id: "hanya" }, { es: "afuera", id: "di luar" }, { es: "respectivamente", id: "masing-masing" }, { es: "inmediatamente", id: "segera" }, { es: "exactamente", id: "tepatnya" }, { es: "claramente", id: "jelas" }, { es: "generalmente", id: "umumnya" }, { es: "enseguida", id: "segera" }, { es: "temprano", id: "awal" }, { es: "adentro", id: "di dalam" }
+      ],
+      conjunctions: [
+      { es: "y", id: "dan" }, { es: "e", id: "dan" }, { es: "ni...ni", id: "baik...maupun" }, { es: "o", id: "atau" }, { es: "u", id: "atau" }, { es: "o bien...o bien", id: "baik...atau" }, { es: "pero", id: "tapi" }, { es: "mas", id: "tapi" }, { es: "aunque", id: "meskipun" }, { es: "es decir", id: "yaitu" }, { es: "porque", id: "karena" }, { es: "pues", id: "sejak" }, { es: "si", id: "jika" }, { es: "como", id: "sebagai" }
+      ],
+      prepositions: [
+      { es: "de", id: "dari" }, { es: "en", id: "di" }, { es: "a", id: "ke" }, { es: "con", id: "dengan" }, { es: "por", id: "oleh" }, { es: "para", id: "untuk" }, { es: "sobre", id: "tentang" }, { es: "entre", id: "di antara" }, { es: "sin", id: "tanpa" }, { es: "desde", id: "dari" }, { es: "hasta", id: "ke" }, { es: "durante", id: "selama" }, { es: "hacia", id: "ke" }, { es: "ante", id: "sebelum" }, { es: "contra", id: "melawan" }, { es: "según", id: "menurut" }, { es: "tras", id: "setelah" }, { es: "bajo", id: "di bawah" }, { es: "a través de", id: "melalui" }, { es: "a partir de", id: "sejak" }, { es: "frente a", id: "di depan" }, { es: "además de", id: "selain" }, { es: "a pesar de", id: "terlepas dari" }, { es: "mediante", id: "melalui" }, { es: "junto a", id: "bersama dengan" }, { es: "debido a", id: "karena" }, { es: "gracias a", id: "terima kasih untuk" }, { es: "pese a", id: "meskipun" }, { es: "de acuerdo con", id: "sesuai dengan" }, { es: "en cuanto a", id: "mengenai" }, { es: "junto con", id: "bersama dengan" }, { es: "acerca de", id: "tentang" }, { es: "respecto a", id: "sehubungan dengan" }, { es: "en torno a", id: "sekitar" }, { es: "en lugar de", id: "daripada" }, { es: "de acuerdo a", id: "menurut" }
+      ],
+      interjections: [
+      { es: "guay", id: "keren (digunakan di Spanyol)" }, { es: "vale", id: "okey (digunakan di Spanyol)" }, { es: "órale", id: "tentu (digunakan di Meksiko)" }, { es: "guau", id: "WOW" }, { es: "bravo", id: "kerja bagus" }, { es: "claro", id: "tentu saja" }, { es: "che", id: "dude (digunakan di Argentina dan Uruguay)" }, { es: "huy", id: "ups" }, { es: "ojalá", id: "semoga saja" }
+      ]
+    };
+
+    const globalDictionary = {
+      "en": "di / pada", "un": "sebuah / seorang", "pequeño": "kecil", "gallinero": "kandang ayam", "vive": "tinggal",
+      "pollito": "anak ayam", "llamado": "bernama", "tito": "tito", "día": "hari", "mientras": "sementara / saat",
+      "desayuna": "sarapan", "ve": "melihat", "una": "sebuah / seorang", "noticia": "berita", "internet": "internet",
+      "que": "bahwa / yang", "dice": "berkata / menyebutkan", "el": "sang / itu", "cielo": "langit", "se": "dirinya",
+      "cae": "runtuh / jatuh", "asustado": "ketakutan", "sale": "keluar", "corriendo": "berlari", "para": "untuk",
+      "avisarle": "memperingatkan dia", "a": "kepada / ke", "sus": "milik mereka", "amigos": "teman-teman", "de": "dari",
+      "la": "sang / itu", "granja": "peternakan", "encuentra": "menemukan / bertemu", "con": "dengan", "gallina": "ayam betina",
+      "pato": "bebek", "ganso": "angsa", "quienes": "yang", "unen": "bergabung", "juntos": "bersama-sama",
+      "corren": "berlari", "hasta": "sampai", "encontrar": "menemukan", "astuto": "licik", "zorro": "rubah",
+      "pueblo": "desa / kota kecil", "engaña": "menipu", "todos": "semua", "los": "para", "animales": "hewan-hewan",
+      "lleva": "membawa", "cueva": "gua", "al": "pada / ke", "siguiente": "berikutnya", "está": "berada / ada",
+      "vacía": "kosong", "sonríe": "tersenyum", "satisfecho": "puas", "sastre": "penjahit", "trabaja": "bekerja",
+      "concentrado": "terkonsentrasi", "taller": "bengkel / tempat kerja", "cuando": "ketika", "unas": "beberapa",
+      "moscas": "lalat", "molestan": "mengganggu", "su": "miliknya", "comida": "makanan", "paño": "kain",
+      "rápido": "cepat", "logra": "berhasil", "matar": "membunuh", "siete": "tujuh", "golpe": "pukulan",
+      "orgulloso": "bangga", "borda": "menyulam", "cinturón": "ikat pinggang", "frase": "frasa / kalimat",
+      "decide": "memutuskan", "viajar": "bepergian", "por": "melalui / demi", "mundo": "dunia", "demostrar": "membuktikan",
+      "gran": "besar", "valentía": "keberanian", "camino": "jalan", "gigantes": "raksasa", "terribles": "mengerikan",
+      "pero": "tetapi", "vence": "mengalahkan", "astucia": "kecerdikan", "rey": "raja", "impresionado": "terkesan",
+      "le": "kepadanya", "ofrece": "menawarkan", "mitad": "separuh", "reino": "kerajaan", "y": "dan", "hija": "putrinya",
+      "aeropuerto": "bandara", "hay": "ada", "mucha": "banyak", "actividad": "aktivitas", "movimiento": "pergerakan",
+      "pasajeros": "penumpang", "maletas": "koper", "personas": "orang-orang", "esperan": "menunggu", "pacientemente": "dengan sabar",
+      "filas": "antrean", "registrar": "mendaftarkan", "equipaje": "bagasi", "pesado": "berat", "guardias": "petugas / penjaga",
+      "caminan": "berjalan", "perros": "anjing", "detectores": "detektor", "seguridad": "keamanan", "terminal": "terminal",
+      "pantallas": "layar", "muestran": "menampilkan", "horarios": "jadwal", "salida": "keberangkatan", "llegada": "kedatangan",
+      "cada": "setiap", "vuelo": "penerbangan", "viajeros": "pelancong", "escuchan": "mendengarkan", "atentos": "penuh perhatian",
+      "anuncios": "pengumuman", "altavoces": "pengeras suara", "sala": "ruangan", "es": "adalah", "necesario": "perlu / penting",
+      "llegar": "tiba", "temprano": "pagi / awal", "evitar": "menghindari", "cualquier": "apa pun", "problema": "masalah",
+      "antes": "sebelum", "subir": "naik", "finalmente": "akhirnya", "pasan": "melewati", "control": "pemeriksaan",
+      "avión": "pesawat", "tranquilos": "tenang", "dinosaurio": "dinosaurus", "grande": "besar", "siempre": "selalu",
+      "hace": "membuat / melakukan", "trampa": "kecurangan / curang", "juegos": "permainan", "están": "mereka ada",
+      "cansados": "lelah", "comportamiento": "perilaku", "egoísta": "egois", "durante": "selama", "vacaciones": "liburan",
+      "ellos": "mereka", "deciden": "memutuskan", "organizarle": "mengaturkan", "broma": "lelucon", "ingeniosa": "cerdas",
+      "darle": "memberinya", "lección": "pelajaran", "cae": "jatuh / masuk", "comprende": "memahami", "romper": "melanggar / merusak",
+      "regras": "aturan", "malo": "buruk", "desde": "sejak", "ese": "itu", "promete": "berjanji", "jugar": "bermain",
+      "manera": "cara", "honesta": "jujur", "sus": "milik mereka", "compañeros": "teman-teman", "ahora": "sekarang",
+      "disfrutan": "menikmati", "tardes": "sore hari", "pelea": "pertengkaran", "niña": "anak perempuan", "bosque": "hutan",
+      "verde": "hijau", "casa": "rumah", "madera": "kayu", "pedir": "meminta", "permiso": "izin", "nadie": "siapa pun",
+      "cocina": "dapur", "prueba": "mencicipi", "tres": "tiga", "platos": "piring", "sopa": "sup", "deliciosa": "lezat",
+      "sobre": "di atas", "mesa": "meja", "luego": "kemudian", "rompe": "mematahkan", "silla": "kursi", "sentarse": "duduk",
+      "demasiado": "terlalu", "peso": "berat", "encima": "di atas", "cansada": "lelah", "busca": "mencari", "cama": "tempat tidur",
+      "cómoda": "nyaman", "segundo": "kedua", "piso": "lantai", "dormir": "tidur", "plácidamente": "dengan tenang",
+      "osos": "beruang", "regresan": "kembali", "se": "mereka", "sorprenden": "terkejut", "ver": "melihat", "nace": "lahir",
+      "diferente": "berbeda", "más": "lebih", "demás": "lainnya", "burlan": "mengolok-olok", "aspecto": "penampilan",
+      "gris": "abu-abu", "torpe": "kikuk", "triste": "sedih", "huir": "kabur", "invierno": "musim dingin", "frío": "dingin",
+      "pasa": "melewati", "meses": "bulan-bulan", "solo": "sendirian", "nadando": "berenang", "lago": "danau", "helado": "es",
+      "esperando": "menunggu", "primavera": "musim semi", "calor": "hangat", "mira": "melihat", "agua": "air",
+      "reflejo": "bayangan / refleksi", "descubre": "menemukan / menyadari", "no": "tidak", "feo": "jelek", "sino": "melainkan",
+      "hermoso": "indah", "cisne": "angsa", "blanco": "putih", "cesta": "keranjang", "abuela": "nenek", "enferma": "sakit",
+      "madre": "ibu", "advierte": "memperingatkan", "tenga": "memiliki", "cuidado": "hati-hati", "cruzar": "menyeberang",
+      "profundo": "dalam / lebat", "lobo": "serigala", "engaña": "menipu", "corre": "berlari", "primero": "lebih dulu",
+      "esconderla": "menyembunyikannya", "llega": "tiba", "nota": "menyadari", "algo": "sesuatu", "extraño": "aneh",
+      "orejas": "telinga", "animal": "hewan", "leñador": "penebang pohon", "valiente": "berani", "entra": "masuk",
+      "tiempo": "waktu", "salva": "menyelamatkan", "ratita": "tikus kecil", "barre": "menyapu", "puerta": "pintu",
+      "moneda": "koin", "compra": "membeli", "lazo": "pita", "rojo": "merah", "colocarlo": "memasangnya", "cola": "ekor",
+      "suave": "lembut", "varios": "beberapa", "como": "seperti", "gallo": "ayam jantan", "quieren": "ingin", "casarse": "menikah",
+      "rechaza": "menolak", "ruidos": "suara bising", "molestos": "mengganggu", "noche": "malam", "acepta": "menerima",
+      "gato": "kucing", "educado": "sopan", "sin": "tanpa", "saber": "tahu", "verdadera": "asli", "intención": "niat",
+      "intenta": "mencoba", "comerla": "memakannya", "escapar": "kabur", "rápidamente": "dengan cepat", "hermanos": "saudara",
+      "cerditos": "babi kecil", "construir": "membangun", "propias": "sendiri", "casas": "rumah", "campo": "pedesaan",
+      "paja": "jerami", "débil": "lemah", "terminar": "selesai", "usar": "menggunakan", "mientras": "sementara",
+      "tercero": "ketiga", "duro": "keras", "ladrillos": "bata", "fuertes": "kuat", "feroz": "ganas", "aparece": "muncul",
+      "destruye": "menghancurkan", "fácilmente": "dengan mudah", "refugiarse": "berlindung", "sólida": "kokoh", "sopla": "meniup",
+      "fuerza": "kekuatan", "derribar": "merobohohkan", "estructura": "struktur", "discuten": "berdebat", "quién": "siapa",
+      "caminante": "pejalan kaki", "abrigo": "mantel", "grueso": "tebal", "polvoriento": "berdebu", "probar": "menguji",
+      "poder": "kekuatan", "quitarle": "melepaskan", "chaqueta": "jaket", "hombre": "pria", "furia": "kencang",
+      "abriga": "merapatkan mantel", "brilla": "bersinar", "suave": "lembut", "quita": "melepas", "persuasión": "bujukan",
+      "amabilidad": "kebaikan", "mejores": "lebih baik", "bruta": "kasar", "liebre": "kelinci", "orgullosa": "sombong",
+      "lentitud": "kelambatan", "tortuga": "kura-kura", "desafía": "menantang", "carrera": "perlombaan", "larga": "panjang",
+      "siesta": "tidur siang", "bajo": "di bawah", "árbol": "pohon", "confiada": "percaya diri", "velocidad": "kecepatan",
+      "duerme": "tidur", "profundamente": "nyenyak", "avanza": "maju", "paso": "langkah", "detenerse": "berhenti",
+      "despierta": "terbangun", "ya": "sudah", "cruzado": "melewati", "meta": "garis finish", "victoriosa": "menang",
+      "león": "singa", "duerme": "tidur", "sombra": "teduh", "ratón": "tikus", "despierta": "membangunkan", "atrapa": "menangkap",
+      "perdonarle": "mengampuni", "vida": "nyawa", "generosidad": "kemurahan hati", "cae": "jatuh", "red": "jaring",
+      "cazadores": "pemburu", "escucha": "mendengar", "rugidos": "raungan", "acude": "berlari", "ayudarlo": "menolongnya",
+      "dientes": "gigi", "filosos": "tajam", "muerde": "menggigit", "cuerdas": "tali", "liberar": "membebaskan",
+      "ningún": "tidak ada", "acto": "tindakan", "bondad": "kebaikan", "playa": "pantai", "coche": "mobil",
+      "costa": "pantai / pesisir", "verano": "musim panas", "niños": "anak-anak", "emocionados": "bersemangat",
+      "nadar": "berenang", "mar": "laut", "azul": "biru", "brillante": "cerah", "llevan": "membawa", "toallas": "handuk",
+      "sombrillas": "payung", "juguetes": "mainan", "castillos": "istana", "arena": "pasir", "helados": "es krim",
+      "fresa": "stroberi", "padre": "ayah", "toma": "mengambil", "fotografías": "foto", "paisaje": "pemandangan",
+      "recordar": "mengingat", "regresan": "kembali", "felices": "bahagia", "experiencia": "pengalaman",
+      "estudiantes": "siswa", "escuela": "sekolah", "mochilas": "tas", "llenas": "penuh", "libros": "buku",
+      "profesora": "guru", "explica": "menjelaskan", "matemáticas": "matematika", "paciencia": "kesabaran", "pizarra": "papan tulis",
+      "recreo": "istirahat", "fútbol": "sepak bola", "patio": "lapangan", "comen": "makan", "meriendas": "camilan",
+      "conversan": "mengobrol", "alegremente": "dengan gembira", "sonar": "berbunyi", "campana": "bel", "aula": "kelas",
+      "tareas": "tugas", "lleno": "penuh", "aprendizajes": "pembelajaran", "nuevos": "baru",
+      "caperucita": "gadis kecil berjubah", "presumida": "sombong", "linda": "cantik/manis"
+    };
+
+    const dailyPairs = [
+      { // 0: MINGGU
+        stories: [
+          {
+            title: "Pollito Tito",
+            transTitle: "Pollito Tito: Kisah anak ayam yang panik mengira langit runtuh.",
+            level: "Intermediate",
+            text: "En un pequeño gallinero vive un pollito llamado Pollito Tito. Un día mientras desayuna ve una noticia en internet que dice que el cielo se cae. Asustado sale corriendo para avisarle a sus amigos de la granja. Se encuentra con la gallina el pato y el ganso quienes se unen a él. Juntos corren hasta encontrar a un astuto zorro en el pueblo. El zorro engaña a todos los animales y los lleva a su cueva. Al día siguiente la cueva está vacía y el zorro sonríe satisfecho.",
+            trans: "Di sebuah kandang ayam kecil hiduplah anak ayam bernama Pollito Tito. Suatu hari saat sarapan ia melihat berita di internet bahwa langit sedang runtuh. Karena ketakutan ia berlari keluar untuk memperingatkan teman-temannya. Ia bertemu ayam betina, bebek, dan angsa yang ikut bersamanya. Bersama-sama mereka berlari hingga bertemu rubah licik di desa. Rubah itu menipu mereka dan membawa mereka ke guanya. Keesokan harinya gua itu kosong dan rubah tersenyum puas.",
+            source: "The Spanish Experiment"
+          },
+          {
+            title: "El sastrecillo valiente",
+            transTitle: "El sastrecillo valiente: Kisah penjahit kecil yang cerdik.",
+            level: "Intermediate",
+            text: "Un pequeño sastre trabaja concentrado en su taller cuando unas moscas molestan su comida. Con un paño rápido logra matar a siete moscas de un solo golpe. Orgulloso borda en su cinturón la frase siete de un golpe. Decide viajar por el mundo para demostrar su gran valentía a todos. En su camino encuentra gigantes terribles pero los vence con su astucia. El rey impresionado le ofrece la mitad de su reino y su hija.",
+            trans: "Seorang penjahit kecil bekerja di bengkelnya saat lalat mengganggu makanannya. Dengan kain cepat ia membunuh tujuh lalat dalam sekali pukul. Bangga ia menyulam di ikat pinggangnya frasa 'tujuh dalam sekali pukul'. Ia memutuskan berkeliling dunia membuktikan keberaniannya. Di jalan ia bertemu raksasa tapi mengalahkan mereka dengan kecerdikannya. Raja yang terkesan memberinya separuh kerajaan dan putrinya.",
+            source: "Hermanos Grimm"
+          }
+        ],
+        quiz: [
+          { q: "Apa arti dari kata 'Pollito'?", options: ["A. Anak Ayam", "B. Rubah", "C. Bebek", "D. Burung", "E. Kandang"], correctIndex: 0 },
+          { q: "Apa arti dari kata 'Zorro'?", options: ["A. Srigala", "B. Rubah", "C. Kucing", "D. Anjing", "E. Singa"], correctIndex: 1 },
+          { q: "Apa arti dari kata 'Cielo'?", options: ["A. Bumi", "B. Laut", "C. Langit", "D. Awan", "E. Matahari"], correctIndex: 2 },
+          { q: "Apa arti dari kata 'Cueva'?", options: ["A. Gua", "B. Rumah", "C. Istana", "D. Pohon", "E. Kamar"], correctIndex: 0 },
+          { q: "Apa arti dari kata 'Granja'?", options: ["A. Kota", "B. Peternakan", "C. Pasar", "D. Sekolah", "E. Kantor"], correctIndex: 1 }
+        ]
+      },
+      { // 1: SENIN
+        stories: [
+          {
+            title: "En el aeropuerto",
+            transTitle: "En el aeropuerto: Suasana sibuk di bandara internasional.",
+            level: "Beginner",
+            text: "En el aeropuerto hay mucha actividad y movimiento de pasajeros con sus maletas. Las personas esperan pacientemente en las filas para registrar su equipaje pesado. Los guardias caminan con perros detectores de seguridad por la terminal. Las pantallas muestran los horarios de salida y llegada de cada vuelo. Los viajeros escuchan atentos los anuncios por los altavoces de la sala. Es necesario llegar temprano para evitar cualquier problema antes de subir. Finalmente los pasajeros pasan el control y suben al avión tranquilos.",
+            trans: "Di bandara ada banyak aktivitas dan pergerakan penumpang dengan koper mereka. Orang-orang menunggu dengan sabar di antrean untuk mendaftarkan bagasi berat mereka. Petugas berjalan dengan anjing detektor keamanan di terminal. Layar menampilkan jadwal keberangkatan dan kedatangan setiap penerbangan. Para pelancong mendengarkan pengumuman dari pengeras suara. Sangat penting datang lebih awal untuk menghindari masalah. Akhirnya penumpang melewati pemeriksaan dan naik ke pesawat dengan tenang.",
+            source: "Aprende Español Práctico"
+          },
+          {
+            title: "Tairon el super tramposo",
+            transTitle: "Tairon el super tramposo: Dinosaurus yang suka berbuat curang.",
+            level: "Beginner",
+            text: "Tairon es un dinosaurio grande que siempre hace trampa en los juegos. Sus amigos están cansados de su comportamiento egoísta durante las vacaciones. Ellos deciden organizarle una broma ingeniosa para darle una lección importante. Tairon cae en la trampa y comprende que romper las reglas es malo. Desde ese día promete jugar de manera honesta con todos sus compañeros. Ahora todos disfrutan juntos de las tardes de juego sin peleas.",
+            trans: "Tairon adalah dinosaurus besar yang selalu berbuat curang dalam permainan. Teman-temannya lelah dengan perilaku egoisnya selama liburan. Mereka memutuskan membuat lelucon cerdas untuk memberinya pelajaran penting. Tairon masuk ke dalam jebakan dan memahami bahwa melanggar aturan itu buruk. Sejak hari itu ia berjanji bermain jujur bersama temannya. Sekarang semua orang menikmati sore hari bermain bersama tanpa pertengkaran.",
+            source: "Biblioteca Infantil"
+          }
+        ],
+        quiz: [
+          { q: "Apa arti dari kata 'Aeropuerto'?", options: ["A. Bandara", "B. Pelabuhan", "C. Stasiun", "D. Terminal", "E. Jalan tol"], correctIndex: 0 },
+          { q: "Apa arti dari kata 'Maletas'?", options: ["A. Dompet", "B. Koper", "C. Jaket", "D. Tiket", "E. Tas kecil"], correctIndex: 1 },
+          { q: "Apa arti dari kata 'Avión'?", options: ["A. Kereta", "B. Kapal", "C. Pesawat", "D. Mobil", "E. Sepeda"], correctIndex: 2 },
+          { q: "Apa arti dari kata 'Dinosaurio'?", options: ["A. Naga", "B. Buaya", "C. Dinosaurus", "D. Kucing", "E. Burung"], correctIndex: 2 },
+          { q: "Apa arti dari kata 'Juegos'?", options: ["A. Makanan", "B. Permainan", "C. Pelajaran", "D. Cerita", "E. Rumah"], correctIndex: 1 }
+        ]
+      },
+      { // 2: SELASA
+        stories: [
+          {
+            title: "Ricitos de oro",
+            transTitle: "Ricitos de oro: Kisah Ricitos de Oro dan Tiga Beruang.",
+            level: "Beginner",
+            text: "Una niña llamada Ricitos de oro camina sola por el bosque verde. Encuentra una pequeña casa de madera y entra sin pedir permiso a nadie. En la cocina prueba tres platos de sopa deliciosa sobre la mesa. Luego rompe la silla pequeña al sentarse con demasiado peso encima. Cansada busca una cama cómoda en el segundo piso para dormir plácidamente. Los tres osos regresan a casa y se sorprenden al ver a la niña.",
+            trans: "Seorang gadis bernama Ricitos de oro berjalan di hutan hijau. Ia menemukan rumah kayu kecil dan masuk tanpa izin. Di dapur ia mencicipi tiga piring sup lezat di atas meja. Lalu ia mematahkan kursi kecil saat duduk. Lelah ia mencari tempat tidur nyaman di lantai dua untuk tidur nyenyak. Tiga beruang pulang ke rumah dan terkejut melihat gadis itu.",
+            source: "Cuentos Infantiles"
+          },
+          {
+            title: "El patito feo",
+            transTitle: "El patito feo: Perjalanan transformasi anak bebek yang berbeda.",
+            level: "Beginner",
+            text: "En una granja nace un patito diferente y más grande que los demás. Todos los animales se burlan de él por su aspecto gris y torpe. Triste decide huir de la granja durante un invierno muy frío. Pasa meses solo nadando en el lago helado esperando la primavera. Cuando llega el calor se mira en el agua y ve su reflejo. Descubre que no es un pato feo sino un hermoso cisne blanco.",
+            trans: "Di peternakan lahir anak bebek yang berbeda dan lebih besar. Semua hewan mengolok-olok penampilannya yang abu-abu dan kikuk. Sedih ia kabur dari peternakan saat musim dingin. Ia menghabiskan bulan-bulan sendirian berenang di danau es menunggu musim semi. Saat hangat tiba ia melihat bayangannya di air. Ia menyadari ia bukanlah bebek jelek melainkan angsa putih yang indah.",
+            source: "Hans Christian Andersen"
+          }
+        ],
+        quiz: [
+          { q: "Apa arti dari kata 'Bosque'?", options: ["A. Pantai", "B. Hutan", "C. Gurun", "D. Kota", "E. Sungai"], correctIndex: 1 },
+          { q: "Apa arti dari kata 'Casa'?", options: ["A. Rumah", "B. Sekolah", "C. Toko", "D. Kantor", "E. Jalan"], correctIndex: 0 },
+          { q: "Apa arti dari kata 'Osos'?", options: ["A. Serigala", "B. Beruang", "C. Kelinci", "D. Kucing", "E. Burung"], correctIndex: 1 },
+          { q: "Apa arti dari kata 'Lago'?", options: ["A. Laut", "B. Danau", "C. Sungai", "D. Kolam", "E. Sumur"], correctIndex: 1 },
+          { q: "Apa arti dari kata 'Cisne'?", options: ["A. Bebek", "B. Angsa", "C. Ayam", "D. Merpati", "E. Bangau"], correctIndex: 1 }
+        ]
+      },
+      { // 3: RABU
+        stories: [
+          {
+            title: "Caperucita Roja",
+            transTitle: "Caperucita Roja: Gadis berjubah merah dan serigala.",
+            level: "Beginner",
+            text: "Caperucita Roja lleva una cesta con comida para su abuela enferma. Su madre le advierte que tenga cuidado al cruzar el bosque profundo. En el camino se encuentra con un lobo astuto que la engaña. El lobo corre primero a la casa de la abuela para esconderla. Cuando la niña llega nota algo extraño en las orejas del animal. Un leñador valiente entra a tiempo y las salva a todas del peligro.",
+            trans: "Caperucita Roja membawa keranjang makanan untuk neneknya yang sakit. Ibunya memperingatkan agar berhati-hati di hutan lebat. Di jalan ia bertemu serigala licik yang menipunya. Serigala berlari lebih dulu ke rumah nenek untuk menyembunyikannya. Saat tiba gadis itu menyadari hal aneh pada telinga hewan itu. Seorang penebang pohon yang berani datang tepat waktu dan menyelamatkan mereka.",
+            source: "Cuentos Clásicos"
+          },
+          {
+            title: "La ratita presumida",
+            transTitle: "La ratita presumida: Tikus kecil yang mendapat koin emas.",
+            level: "Beginner",
+            text: "Una linda ratita barre la puerta de su casa y encuentra una moneda. Compra un lazo rojo hermoso para colocarlo en su cola suave. Varios animales como el perro y el gallo quieren casarse con ella. Ella rechaza a todos por sus ruidos molestos durante la noche. Finalmente acepta a un gato educado sin saber su verdadera intención. El gato intenta comerla pero ella logra escapar rápidamente a tiempo.",
+            trans: "Seekor tikus manis menyapu pintu rumahnya dan menemukan koin. Ia membeli pita merah indah untuk dipasang di ekornya. Beberapa hewan seperti anjing dan ayam ingin menikahinya. Ia menolak semuanya karena suara bising mereka di malam hari. Akhirnya ia menerima kucing sopan tanpa tahu niat aslinya. Kucing itu mencoba memakannya tapi ia berhasil kabur tepat waktu.",
+            source: "Fernán Caballero"
+          }
+        ],
+        quiz: [
+          { q: "Apa arti dari kata 'Abuela'?", options: ["A. Ibu", "B. Bibi", "C. Nenek", "D. Kakak", "E. Teman"], correctIndex: 2 },
+          { q: "Apa arti dari kata 'Lobo'?", options: ["A. Anjing", "B. Serigala", "C. Singa", "D. Harimau", "E. Kuda"], correctIndex: 1 },
+          { q: "Apa arti dari kata 'Moneda'?", options: ["A. Koin", "B. Kertas", "C. Emas", "D. Batu", "E. Kayu"], correctIndex: 0 },
+          { q: "Apa arti dari kata 'Gato'?", options: ["A. Anjing", "B. Kucing", "C. Tikus", "D. Burung", "E. Ikan"], correctIndex: 1 },
+          { q: "Apa arti dari kata 'Perro'?", options: ["A. Kucing", "B. Kelinci", "C. Anjing", "D. Sapi", "E. Kuda"], correctIndex: 2 }
+        ]
+      },
+      { // 4: KAMIS
+        stories: [
+          {
+            title: "Los tres cerditos",
+            transTitle: "Los tres cerditos: Tiga babi kecil membangun rumah.",
+            level: "Beginner",
+            text: "Tres hermanos cerditos deciden construir sus propias casas en el campo. El primero hace una casa de paja débil para terminar rápido e ir a jugar. El segundo usa madera ligera mientras el tercero trabaja duro usando ladrillos fuertes. Un lobo feroz aparece y destruye fácilmente las casas de paja y madera. Los cerditos corren asustados a refugiarse en la casa sólida de ladrillos. El lobo sopla con fuerza pero no logra derribar la estructura fuerte.",
+            trans: "Tiga saudara babi memutuskan membangun rumah sendiri di desa. Babi pertama membuat rumah jerami yang lemah agar cepat selesai bermain. Babi kedua menggunakan kayu sedangkan babi ketiga bekerja keras memakai bata kuat. Serigala ganas muncul dan menghancurkan rumah jerami dan kayu. Babi-babi berlari ketakutan berlindung di rumah bata yang kokoh. Serigala meniup kuat namun gagal merobohkan struktur kuat itu.",
+            source: "Cuento Popular"
+          },
+          {
+            title: "El viento y el sol",
+            transTitle: "El viento y el sol: Persaingan antara angin dan matahari.",
+            level: "Beginner",
+            text: "El viento y el sol discuten sobre quién es el más fuerte de los dos. Ven a un caminante con un abrigo grueso por el camino polvoriento. Deciden probar su poder intentando quitarle la chaqueta al hombre. El viento sopla con furia pero el hombre se abriga más fuerte. El sol brilla con calor suave y el hombre se quita el abrigo. La persuasión y la amabilidad son mejores que la fuerza bruta.",
+            trans: "Angin dan matahari berdebat siapa yang paling kuat di antara mereka. Mereka melihat seorang pejalan kaki dengan mantel tebal di jalan. Mereka memutuskan menguji kekuatan dengan melepaskan jaket pria itu. Angin meniup kencang tapi pria itu makin merapatkan mantelnya. Matahari bersinar hangat dan pria itu melepas mantelnya. Bujukan lembut lebih baik daripada kekuatan kasar.",
+            source: "Fábulas de Esopo"
+          }
+        ],
+        quiz: [
+          { q: "Apa arti dari kata 'Cerditos'?", options: ["A. Sapi", "B. Domba", "C. Babi kecil", "D. Ayam", "E. Kucing"], correctIndex: 2 },
+          { q: "Apa arti dari kata 'Madera'?", options: ["A. Kayu", "B. Besi", "C. Kaca", "D. Plastik", "E. Batu"], correctIndex: 0 },
+          { q: "Apa arti dari kata 'Viento'?", options: ["A. Air", "B. Api", "C. Angin", "D. Tanah", "E. Salju"], correctIndex: 2 },
+          { q: "Apa arti dari kata 'Sol'?", options: ["A. Bulan", "B. Bintang", "C. Matahari", "D. Langit", "E. Awan"], correctIndex: 2 },
+          { q: "Apa arti dari kata 'Fuerte'?", options: ["A. Lemah", "B. Kuat", "C. Kecil", "D. Lambat", "E. Buruk"], correctIndex: 1 }
+        ]
+      },
+      { // 5: JUMAT
+        stories: [
+          {
+            title: "La tortuga y la liebre",
+            transTitle: "La tortuga y la liebre: Perlombaan antara kura-kura dan kelinci.",
+            level: "Beginner",
+            text: "Una liebre orgullosa se burla de la lentitud de una pequeña tortuga. La tortuga la desafía a una carrera larga por el bosque. La liebre corre muy rápido y decide dormir una siesta bajo un árbol. Confiada en su velocidad duerme profundamente mientras el tiempo pasa. La tortuga avanza paso a paso sin detenerse ni un momento. Cuando la liebre despierta la tortuga ya ha cruzado la meta victoriosa.",
+            trans: "Kelinci yang sombong mengolok-olok kura-kura yang lambat. Kura-kura menantangnya berlomba di hutan. Kelinci berlari sangat cepat lalu tidur siang di bawah pohon. Penuh percaya diri ia tidur nyenyak saat waktu berlalu. Kura-kura maju selangkah demi selangkah tanpa berhenti. Saat kelinci terbangun kura-kura sudah melewati garis finish.",
+            source: "Fábulas de Esopo"
+          },
+          {
+            title: "El león y el ratón",
+            transTitle: "El león y el ratón: Kebaikan hati hewan kecil kepada raja hutan.",
+            level: "Beginner",
+            text: "Un león grande duerme bajo la sombra cuando un ratón lo despierta. El león lo atrapa pero decide perdonarle la vida con generosidad. Días después el león cae en una red fuerte de cazadores. El pequeño ratón escucha sus rugidos y acude rápido a ayudarlo. Con sus dientes filosos muerde las cuerdas hasta liberar al león. Ningún acto de bondad es demasiado pequeño en este mundo.",
+            trans: "Seekor singa besar tidur di bawah teduh saat seekor tikus membangunkannya. Singa menangkapnya tapi memutuskan mengampuni nyawanya. Beberapa hari kemudian singa jatuh ke jaring pemburu. Tikus kecil mendengar raungannya dan berlari menolong. Dengan giginya yang tajam ia menggigit tali hingga membebaskan singa. Tak ada kebaikan yang terlalu kecil.",
+            source: "Fábulas de Esopo"
+          }
+        ],
+        quiz: [
+          { q: "Apa arti dari kata 'Tortuga'?", options: ["A. Kelinci", "B. Kura-kura", "C. Kucing", "D. Anjing", "E. Burung"], correctIndex: 1 },
+          { q: "Apa arti dari kata 'Liebre'?", options: ["A. Kelinci", "B. Rusa", "C. Kuda", "D. Sapi", "E. Domba"], correctIndex: 0 },
+          { q: "Apa arti dari kata 'Árbol'?", options: ["A. Bunga", "B. Rumput", "C. Pohon", "D. Daun", "E. Tanah"], correctIndex: 2 },
+          { q: "Apa arti dari kata 'León'?", options: ["A. Macan", "B. Singa", "C. Serigala", "D. Beruang", "E. Rubah"], correctIndex: 1 },
+          { q: "Apa arti dari kata 'Ratón'?", options: ["A. Kucing", "B. Tikus", "C. Kelinci", "D. Hamster", "E. Rubah"], correctIndex: 1 }
+        ]
+      },
+      { // 6: SABTU
+        stories: [
+          {
+            title: "El Viaje a la Playa",
+            transTitle: "El Viaje a la Playa: Liburan menyenangkan di pantai.",
+            level: "Beginner",
+            text: "La familia viaja en coche temprano hacia la costa durante el verano. Los niños están emocionados por nadar en el mar azul brillante. Llevan toallas sombrillas y juguetes para hacer castillos de arena suave. Durante la tarde comen helados deliciosos de fresa bajo el sol. El padre toma fotografías hermosas del paisaje para recordar el día. Todos regresan a casa cansados pero muy felices por la experiencia.",
+            trans: "Keluarga bepergian dengan mobil menuju pantai di musim panas. Anak-anak bersemangat berenang di laut biru yang cerah. Mereka membawa handuk, payung, dan mainan untuk membuat istana pasir. Di sore hari mereka makan es krim stroberi di bawah matahari. Ayah mengambil foto pemandangan indah untuk kenangan. Semua pulang ke rumah lelah tapi sangat bahagia.",
+            source: "JELSTUD Stories"
+          },
+          {
+            title: "Un día en la escuela",
+            transTitle: "Un día en la escuela: Kegiatan sehari-hari di sekolah.",
+            level: "Beginner",
+            text: "Los estudiantes llegan a la escuela con sus mochilas llenas de libros. La profesora explica la lección de matemáticas con mucha paciencia en la pizarra. En el recreo los niños juegan al fútbol en el patio grande. Comen sus meriendas y conversan alegremente con sus amigos cercanos. Al sonar la campana regresan al aula para terminar las tareas. Es un día divertido y lleno de aprendizajes nuevos para todos.",
+            trans: "Siswa tiba di sekolah dengan tas penuh buku. Guru menjelaskan pelajaran matematika dengan sabar di papan tulis. Di waktu istirahat anak-anak bermain sepak bola di lapangan besar. Mereka makan camilan dan mengobrol dengan teman dekat. Saat bel berbunyi mereka kembali ke kelas menyelesaikan tugas. Hari yang menyenangkan penuh pembelajaran baru.",
+            source: "JELSTUD Notes"
+          }
+        ],
+        quiz: [
+          { q: "Apa arti dari kata 'Playa'?", options: ["A. Gunung", "B. Pantai", "C. Danau", "D. Sungai", "E. Hutan"], correctIndex: 1 },
+          { q: "Apa arti dari kata 'Mar'?", options: ["A. Laut", "B. Darat", "C. Langit", "D. Awan", "E. Hujan"], correctIndex: 0 },
+          { q: "Apa arti dari kata 'Escuela'?", options: ["A. Rumah sakit", "B. Sekolah", "C. Toko", "D. Pasar", "E. Kantor"], correctIndex: 1 },
+          { q: "Apa arti dari kata 'Libros'?", options: ["A. Buku", "B. Pensil", "C. Meja", "D. Kursi", "E. Tas"], correctIndex: 0 },
+          { q: "Apa arti dari kata 'Familia'?", options: ["A. Teman", "B. Keluarga", "C. Guru", "D. Siswa", "E. Tetangga"], correctIndex: 1 }
+        ]
+      }
+    ];
+
+    let currentDayData = {};
+    let activeStoryIndex = 0;
+    let selectedOptionIdx = null;
+    let currentQuizIdx = 0;
+    let savedCards = JSON.parse(localStorage.getItem('jelstud_saved_cards')) || [];
+    let currentCardIdx = 0;
+    let selectedWord = "";
+    let selectedWordMeaning = "";
+    let currentMode = "word";
+
+    window.onload = function() {
+      checkAuth();
+    };
+
+    function initializeApp() {
+      renderVocabTab();
+
+      const savedStreak = localStorage.getItem('jelstud_streak') || '1';
+      document.getElementById('streak-count').innerText = `${savedStreak} Hari Berturut`;
+
+      const dayIndex = new Date().getDay();
+      currentDayData = dailyPairs[dayIndex] || dailyPairs[0];
+
+      let htmlContainer = "";
+      currentDayData.stories.forEach((st, idx) => {
+        htmlContainer += `
+          <div class="story-card" onclick="openStory(${idx})">
+            <div>
+              <span class="badge-level">${st.level} • Cerita ${idx+1} Hari Ini</span>
+              <div class="story-title">${st.title}</div>
+            </div>
+            <i class="fas fa-chevron-right" style="color: var(--text-muted);"></i>
+          </div>
+        `;
+      });
+      document.getElementById('dynamic-stories-container').innerHTML = htmlContainer;
+
+      loadQuizQuestion();
+    }
+
+    function loadQuizQuestion() {
+      const qObj = currentDayData.quiz[currentQuizIdx];
+      document.getElementById('quiz-num').innerText = currentQuizIdx + 1;
+      document.getElementById('main-quiz-q').innerText = qObj.q;
+      document.getElementById('main-quiz-feedback').innerText = "";
+      selectedOptionIdx = null;
+
+      let optionsHTML = "";
+      qObj.options.forEach((opt, idx) => {
+        optionsHTML += `<button class="quiz-option-btn" onclick="selectOption(${idx}, this)">${opt}</button>`;
+      });
+      document.getElementById('main-quiz-options').innerHTML = optionsHTML;
+    }
+
+    function renderVocabTab() {
+      for (let category in vocabData) {
+        const container = document.getElementById('cat-' + category);
+        if (!container) continue;
+        let html = "";
+        vocabData[category].forEach(item => {
+          html += `
+            <div class="vocab-item">
+              <span class="vocab-es">${item.es}</span>
+              <span class="vocab-id">${item.id}</span>
+            </div>
+          `;
+        });
+        container.innerHTML = html;
+      }
+    }
+
+    function toggleVocab(catId, event) {
+      if (event) event.preventDefault();
+      const list = document.getElementById(catId);
+      list.classList.toggle('open');
+      return false;
+    }
+
+    function closeSplash() {
+      document.getElementById('splash-screen').classList.add('slide-up');
+    }
+
+    function switchTab(tabName, element) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab-' + tabName).classList.add('active');
+      element.classList.add('active');
+    }
+
+    function openStory(index) {
+      activeStoryIndex = index;
+      const storyObj = currentDayData.stories[index];
+
+      document.getElementById('stories-list').style.display = 'none';
+      document.getElementById('reader-view').style.display = 'block';
+      document.getElementById('reader-title').innerText = storyObj.title;
+      document.getElementById('reader-subtitle-trans').innerText = storyObj.transTitle;
+      document.getElementById('reader-level').innerText = storyObj.level;
+      document.getElementById('article-link').href = "#";
+      document.getElementById('article-link').innerText = storyObj.source;
+
+      const words = storyObj.text.split(' ');
+      const interactiveHTML = words.map(w => {
+        const cleanWord = w.toLowerCase().replace(/[^a-zA-ZáéíóúñÁÉÍÓÚÑ]/g, "");
+        return `<span class="interactive-word" onclick="clickWord('${cleanWord}', '${w}', this)">${w}</span>`;
+      }).join(' ');
+      document.getElementById('reader-content').innerHTML = interactiveHTML;
+    }
+
+    function closeStory() {
+      document.getElementById('stories-list').style.display = 'block';
+      document.getElementById('reader-view').style.display = 'none';
+      closePopover();
+    }
+
+    let selectedSentenceEs = "";
+    let selectedSentenceId = "";
+
+    function clickWord(cleanWord, originalWord, element) {
+      document.querySelectorAll('.interactive-word').forEach(e => e.classList.remove('selected'));
+      element.classList.add('selected');
+
+      selectedWord = originalWord;
+      selectedWordMeaning = globalDictionary[cleanWord] || "Terjemahan kata Spanyol";
+
+      // --- MENCARI KALIMAT SPANYOL & INDONESIA BERDASARKAN TITIK ---
+      const storyObj = currentDayData.stories[activeStoryIndex];
+      const fullTextEs = storyObj.text;
+      const fullTextId = storyObj.trans;
+
+      // Cari posisi kata yang diklik di dalam teks Spanyol
+      const wordIndex = fullTextEs.indexOf(originalWord);
+      
+      // Cari titik terdekat sebelum dan sesudah kata untuk membatasi 1 kalimat
+      let startEs = fullTextEs.lastIndexOf('.', wordIndex);
+      startEs = startEs === -1 ? 0 : startEs + 2; // Lewati spasi setelah titik
+      
+      let endEs = fullTextEs.indexOf('.', wordIndex);
+      endEs = endEs === -1 ? fullTextEs.length : endEs + 1;
+
+      selectedSentenceEs = fullTextEs.substring(startEs, endEs).trim();
+
+      // Cari batasan kalimat terjemahan Indonesianya secara proporsional
+      const sentencesEs = fullTextEs.split('. ').map(s => s.trim());
+      const sentencesId = fullTextId.split('. ').map(s => s.trim());
+      
+      let targetSentenceIdx = 0;
+      for (let i = 0; i < sentencesEs.length; i++) {
+        if (fullTextEs.indexOf(sentencesEs[i]) <= wordIndex) {
+          targetSentenceIdx = i;
+        }
+      }
+      selectedSentenceId = sentencesId[targetSentenceIdx] ? sentencesId[targetSentenceIdx] + '.' : fullTextId;
+      // -------------------------------------------------------------
+
+      setTranslateMode('word');
+      document.getElementById('popover').style.display = 'block';
+    }
+
+    function setTranslateMode(mode) {
+      currentMode = mode;
+      document.getElementById('btn-mode-word').classList.toggle('active', mode === 'word');
+      document.getElementById('btn-mode-sentence').classList.toggle('active', mode === 'sentence');
+
+      if (mode === 'word') {
+        document.getElementById('pop-original').innerText = selectedWord;
+        document.getElementById('pop-translated').innerText = selectedWordMeaning;
+      } else {
+        // Tampilkan hanya satu kalimat tempat kata itu diklik
+        document.getElementById('pop-original').innerText = selectedSentenceEs;
+        document.getElementById('pop-translated').innerText = selectedSentenceId;
+      }
+    }
+
+    function closePopover() {
+      document.getElementById('popover').style.display = 'none';
+    }
+
+    function speakCurrentText() {
+      const storyObj = currentDayData.stories[activeStoryIndex];
+      const textToSpeak = currentMode === 'word' ? selectedWord : storyObj.text;
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.lang = 'es-ES';
+      speechSynthesis.speak(utterance);
+    }
+
+    function selectOption(idx, element) {
+      selectedOptionIdx = idx;
+      document.querySelectorAll('.quiz-option-btn').forEach(btn => btn.classList.remove('selected-option'));
+      element.classList.add('selected-option');
+    }
+
+    function nextQuizQuestion() {
+      const feedback = document.getElementById('main-quiz-feedback');
+      const qObj = currentDayData.quiz[currentQuizIdx];
+
+      if (selectedOptionIdx === null) {
+        alert("Pilih salah satu jawaban (A, B, C, D, atau E) dulu ya!");
+        return;
+      }
+
+      if (selectedOptionIdx === qObj.correctIndex) {
+        feedback.style.color = "var(--green-dark)";
+        feedback.innerText = "🎉 Jawaban Benar! Hebat!";
+        setTimeout(() => {
+          currentQuizIdx = (currentQuizIdx + 1) % currentDayData.quiz.length;
+          loadQuizQuestion();
+        }, 1200);
+      } else {
+        const correctOpt = qObj.options[qObj.correctIndex];
+        feedback.style.color = "var(--danger-color)";
+        feedback.innerText = `❌ Belum tepat. Jawaban benar: ${correctOpt}`;
+      }
+    }
+
+    function updateCardUI() {
+      if (savedCards.length > 0) {
+        document.getElementById('fc-word').innerText = savedCards[currentCardIdx].word;
+        document.getElementById('fc-meaning').innerText = savedCards[currentCardIdx].meaning;
+        document.getElementById('fc-meaning').style.display = 'none';
+      }
+    }
+
+    function saveCurrentWord() {
+  const storyObj = currentDayData.stories[activeStoryIndex];
+  const wordToSave = currentMode === 'word' ? selectedWord : storyObj.text;
+  const meaningToSave = currentMode === 'word' ? selectedWordMeaning : storyObj.trans;
+
+  if(!savedCards.some(c => c.word === wordToSave)) {
+    savedCards.push({ word: wordToSave, meaning: meaningToSave });
+    currentCardIdx = savedCards.length - 1;
+    updateCardUI();
+    
+    // 1. Simpan permanen flashcard (biar gak ilang pas di-refresh)
+    localStorage.setItem('jelstud_saved_cards', JSON.stringify(savedCards));
+  }
+
+  // 2. Logika Streak Harian (Cuma nambah 1 kali sehari)
+  const today = new Date().toISOString().slice(0, 10);
+  const lastSavedDate = localStorage.getItem('jelstud_last_streak_date');
+  let currentStreak = parseInt(localStorage.getItem('jelstud_streak')) || 1;
+
+  if (lastSavedDate !== today) {
+    currentStreak += 1;
+    localStorage.setItem('jelstud_streak', currentStreak);
+    localStorage.setItem('jelstud_last_streak_date', today);
+  }
+
+  const streakElement = document.getElementById('streak-count');
+  if (streakElement) {
+    streakElement.innerText = `${currentStreak} Hari Berturut`;
+  }
+
+  closePopover();
+}
+
+    function flipCard() {
+      if (savedCards.length === 0) return;
+      const meaningEl = document.getElementById('fc-meaning');
+      meaningEl.style.display = meaningEl.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function nextCard() {
+      if (savedCards.length === 0) {
+        alert("Belum ada kartu tersimpan. Buka menu BACA, klik kata dalam cerita lalu simpan!");
+        return;
+      }
+      currentCardIdx = (currentCardIdx + 1) % savedCards.length;
+      updateCardUI();
+    }
+
+    function toggleChat() {
+      const chat = document.getElementById('chat-window');
+      chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function handleChatKey(e) {
+      if (e.key === 'Enter') sendChatMessage();
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('chat-input');
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      const chatBody = document.getElementById('chat-body');
+      chatBody.innerHTML += `<div class="chat-msg msg-user">${msg}</div>`;
+      input.value = "";
+
+      setTimeout(() => {
+        let reply = "Pertanyaan menarik! Cek menu Kosakata atau Catetan untuk tips bahasa Spanyol yaa.";
+        const lower = msg.toLowerCase();
+
+        if (lower.includes("huruf h") || lower.includes("h")) {
+          reply = "Huruf H dalam bahasa Spanyol itu bisu / tidak dibaca! Contohnya 'Hola' dibaca 'Ola'.";
+        } else if (lower.includes("ayam") || lower.includes("pollito")) {
+          reply = "Anak ayam dalam bahasa Spanyol adalah **'pollito'** 🐥";
+        } else if (lower.includes("rumah") || lower.includes("casa")) {
+          reply = "Rumah dalam bahasa Spanyol adalah **'casa'** 🏠";
+        }
+
+        chatBody.innerHTML += `<div class="chat-msg msg-bot">${reply}</div>`;
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }, 500);
+    }
+
+    function filterVocab() {
+      const query = document.getElementById('vocab-search').value.toLowerCase().trim();
+      const categories = ['cat-pronouns', 'cat-nouns', 'cat-adjectives', 'cat-verbs', 'cat-adverbs', 'cat-conjunctions', 'cat-prepositions', 'cat-interjections'];
+
+      categories.forEach(catId => {
+        const container = document.getElementById(catId);
+        if (!container) return;
+        const cardCard = container.closest('.vocab-category-card');
+        const items = container.getElementsByClassName('vocab-item');
+        let hasVisibleItem = false;
+
+        for (let item of items) {
+          const esText = item.querySelector('.vocab-es').innerText.toLowerCase();
+          const idText = item.querySelector('.vocab-id').innerText.toLowerCase();
+
+          if (esText.includes(query) || idText.includes(query)) {
+            item.style.display = "flex";
+            hasVisibleItem = true;
+          } else {
+            item.style.display = "none";
+          }
+        }
+
+        if (query !== "") {
+          if (hasVisibleItem) {
+            cardCard.style.display = "block";
+            container.classList.add('open');
+          } else {
+            cardCard.style.display = "none";
+          }
+        } else {
+          cardCard.style.display = "block";
+          container.classList.remove('open');
+        }
+      });
+    }
+
+    function filterVocab() {
+      const query = document.getElementById('vocab-search').value.toLowerCase().trim();
+      const categories = ['cat-pronouns', 'cat-nouns', 'cat-adjectives', 'cat-verbs', 'cat-adverbs', 'cat-conjunctions', 'cat-prepositions', 'cat-interjections'];
+
+      categories.forEach(catId => {
+        const container = document.getElementById(catId);
+        if (!container) return;
+        const cardCard = container.closest('.vocab-category-card');
+        const items = container.getElementsByClassName('vocab-item');
+        let hasVisibleItem = false;
+
+        for (let item of items) {
+          const esText = item.querySelector('.vocab-es').innerText.toLowerCase();
+          const idText = item.querySelector('.vocab-id').innerText.toLowerCase();
+
+          if (esText.includes(query) || idText.includes(query)) {
+            item.style.display = "flex";
+            hasVisibleItem = true;
+          } else {
+            item.style.display = "none";
+          }
+        }
+
+        if (query !== "") {
+          if (hasVisibleItem) {
+            cardCard.style.display = "block";
+            container.classList.add('open');
+          } else {
+            cardCard.style.display = "none";
+          }
+        } else {
+          cardCard.style.display = "block";
+          container.classList.remove('open');
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+  // 1. Ambil data streak
+  let savedStreak = parseInt(localStorage.getItem('jelstud_streak')) || 1;
+  const streakElement = document.getElementById('streak-count');
+  if (streakElement) {
+    streakElement.innerText = `${savedStreak} Hari Berturut`;
+  }
+
+  // 2. Langsung panggil fungsi update tampilan kartu bawaan aplikasimu
+  if (typeof updateCardUI === 'function') {
+    updateCardUI();
+  } else if (typeof updateFlashcardDisplay === 'function') {
+    updateFlashcardDisplay();
+  }
+});
+
+function openResetPassword() {
+    let email = prompt("Masukkan email kamu yang terdaftar untuk reset kata sandi:");
+    if (email) {
+      alert("Instruksi pemulihan kata sandi telah dikirim ke " + email + ". Silakan cek email kamu!");
+    }
+  }
+
+  function togglePasswordVisibility() {
+    const passInput = document.getElementById('auth-password');
+    const passIcon = document.getElementById('toggle-pass-icon');
+
+    if (passInput.type === 'password') {
+        passInput.type = 'text';
+        passIcon.innerText = '👁️‍🗨️'; // Ikon mata tertutup
+    } else {
+        passInput.type = 'password';
+        passIcon.innerText = ' 👁 '; // Ikon mata terbuka
+    }
+}
+  </script>
+</body>
+</html>
