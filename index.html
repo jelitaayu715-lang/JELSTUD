@@ -313,28 +313,69 @@
           <div id="main-quiz-feedback" style="margin-top: 10px; font-size: 13px; font-weight: 700;"></div>
         </div>
       </div>
-      <div class="baca-right-column">
-        <!-- Bagian Edukasi Abjad & Huruf Vokal Spanyol -->
-    <div class="spanish-alphabet-section" style="margin-top: 30px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-      <h2 style="font-size: 18px; color: #333; margin-bottom: 12px; font-weight: bold;">
-        Abjad Spanyol
-      </h2>
-      <p style="font-size: 14px; color: #444; line-height: 1.6; margin-bottom: 15px;">
-        Di dalam bahasa Spanyol terdapat 27 huruf yang terdiri dari <strong>22 huruf konsonan</strong> dan <strong>5 huruf vokal</strong>.
-      </p>
 
-      <h3 style="font-size: 16px; color: #333; margin-bottom: 12px; font-weight: bold;">Huruf Vokal</h3>
+      <div class="vocab-category-card" style="margin-top: 20px;">
+        <div class="vocab-cat-header" onclick="toggleVocab('cat-abjad-spanyol', event)">
+          <span> Abjad Spanyol</span> 
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        
+        <div class="vocab-list" id="cat-abjad-spanyol" style="padding: 15px;">
+          <p style="font-size: 14px; color: var(--text-dark); line-height: 1.6; margin-bottom: 15px;">
+            Di dalam bahasa Spanyol terdapat 27 huruf yang terdiri dari <strong>22 huruf konsonan</strong> dan <strong>5 huruf vokal</strong>.
+          </p>
+    
+          <h3 style="font-size: 15px; color: var(--green-dark); margin-bottom: 8px; font-weight: bold;">Huruf Vokal</h3>
+          <div style="overflow-x: auto; margin-bottom: 15px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+              <thead>
+                <tr style="background-color: var(--bg-main); color: var(--text-dark); border-bottom: 2px solid var(--border-color);">
+                  <th style="padding: 8px 10px; border: 1px solid var(--border-color); width: 15%;">Huruf</th>
+                  <th style="padding: 8px 10px; border: 1px solid var(--border-color); width: 25%;">Nama</th>
+                  <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Cara pengucapan dan contoh kata</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color); font-weight: bold;">Aa</td>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color);">[a] dibaca a</td>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color);">Seperti huruf A di kata apel<br><em style="color: var(--text-muted);">amor (cinta), azul (biru), agua (air)</em></td>
+                </tr>
+                <tr style="background-color: #fafafa;">
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color); font-weight: bold;">Ee</td>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color);">[e] dibaca e</td>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color);">Seperti huruf E di kata ember<br><em style="color: var(--text-muted);">escuela (sekolah), estación (stasiun), estable (stabil)</em></td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color); font-weight: bold;">Ii</td>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color);">[i] dibaca i</td>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color);">Seperti huruf I di kata ikan<br><em style="color: var(--text-muted);">iglesia (gereja), isla (pulau), imán (magnet)</em></td>
+                </tr>
+                <tr style="background-color: #fafafa;">
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color); font-weight: bold;">Oo</td>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color);">[o] dibaca o</td>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color);">Seperti huruf O di kata obat<br><em style="color: var(--text-muted);">oso (beruang), ola (ombak), oro (emas)</em></td>
+                </tr>
+                <tr>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color); font-weight: bold;">Uu</td>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color);">[u] dibaca u</td>
+                  <td style="padding: 8px 10px; border: 1px solid var(--border-color);">Seperti huruf U di kata ular<br><em style="color: var(--text-muted);">uno (satu), uva (anggur), uniforme (seragam)</em></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-      <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
-          <thead>
-            <tr style="background-color: #f4f4f4; color: #333; border-bottom: 2px solid #ddd;">
-              <th style="padding: 10px; border: 1px solid #ddd;">Huruf</th>
-              <th style="padding: 10px; border: 1px solid #ddd;">Nama</th>
-              <th style="padding: 10px; border: 1px solid #ddd;">Cara pengucapan dan contoh kata</th>
-            </tr>
-          </thead>
-          <tbody>
+          <h3 style="font-size: 15px; color: var(--green-dark); margin-bottom: 8px; font-weight: bold;">Huruf Konsonan</h3>
+          <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+              <thead>
+                <tr style="background-color: var(--bg-main); color: var(--text-dark); border-bottom: 2px solid var(--border-color);">
+                  <th style="padding: 8px 10px; border: 1px solid var(--border-color); width: 15%;">Huruf</th>
+                  <th style="padding: 8px 10px; border: 1px solid var(--border-color); width: 25%;">Nama</th>
+                  <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Cara pengucapan dan contoh kata</th>
+                </tr>
+              </thead>
+              <tbody>
             <tr>
               <td style="padding: 10px; border: 1px solid #ddd; font-weight: bold;">Bb</td>
               <td style="padding: 10px; border: 1px solid #ddd;">[be] dibaca be</td>
@@ -451,6 +492,315 @@
     </div>
       </div>
       </div>
+
+<!-- Bubble 1: Angka Spanyol (Números) Lengkap -->
+<div class="vocab-category-card" style="margin-top: 15px;">
+  <div class="vocab-cat-header" onclick="toggleVocab('cat-angka-spanyol', event)">
+    <span>Angka Spanyol (Números)</span> 
+    <i class="fas fa-chevron-down"></i>
+  </div>
+  
+  <div class="vocab-list" id="cat-angka-spanyol" style="padding: 15px;">
+    <p style="font-size: 14px; color: var(--text-dark); line-height: 1.6; margin-bottom: 12px;">
+      Daftar lengkap angka dalam bahasa Spanyol dari dasar hingga jutaan:
+    </p>
+    
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; margin-bottom: 15px;">
+        <thead>
+          <tr style="background-color: var(--bg-main); color: var(--text-dark); border-bottom: 2px solid var(--border-color);">
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color); text-align: center; width: 35%;">Número</th>
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Español</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 0 - 10 -->
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">0</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">cero</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">1</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">uno</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">2</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">dos</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">3</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">tres</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">4</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">cuatro</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">5</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">cinco</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">6</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">seis</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">7</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">siete</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">8</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">ocho</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">9</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">nueve</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">10</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">diez</td></tr>
+          
+          <!-- 11 - 15 -->
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">11</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">once</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">12</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">doce</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">13</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">trece</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">14</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">catorce</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">15</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">quince</td></tr>
+
+          <!-- 16 - 19 -->
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">16</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">dieciséis</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">17</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">diecisiete</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">18</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">dieciocho</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">19</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">diecinueve</td></tr>
+
+          <!-- 20 - 29 -->
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">20</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">veinte</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">21</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">veintiuno</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">22</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">veintidós</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">23</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">veintitrés</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">24</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">veinticuatro</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">25</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">veinticinco</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">26</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">veintiséis</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">27</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">veintisiete</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">28</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">veintiocho</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">29</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">veintinueve</td></tr>
+
+          <!-- Puluhan (30 - 90) -->
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">30</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">treinta</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">40</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">cuarenta</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">50</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">cincuenta</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">60</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">sesenta</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">70</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">setenta</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">80</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">ochenta</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">90</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">noventa</td></tr>
+
+          <!-- Ratusan & Ribuan -->
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">100</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">cien</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">200</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">doscientos</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">300</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">trescientos</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">400</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">cuatrocientos</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">500</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">quinientos</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">600</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">seiscientos</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">700</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">setecientos</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">800</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">ochocientos</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">900</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">novecientos</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">1.000</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">mil</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">2.000</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">dos mil</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">1.000.000</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">un millón</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">2.000.000</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">dos millones</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">1.000.000.000</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">mil millones</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Catatan / Contoh Penggabungan Angka (Tanda Panah Diganti Titik Dua) -->
+    <h4 style="font-size: 14px; color: var(--green-dark); margin-bottom: 6px; font-weight: bold;">Contoh Penggabungan Angka:</h4>
+    <div style="font-size: 13px; color: var(--text-dark); background: var(--bg-main); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); line-height: 1.6;">
+      <strong>Mulai angka 30 - 90:</strong> Menggunakan pola <em>puluhan + y + satuan</em>[cite: 10]<br>
+      • 31 : <em>treinta y uno</em>[cite: 10]<br>
+      • 45 : <em>cuarenta y cinco</em>[cite: 10]<br>
+      • 57 : <em>cincuenta y siete</em>[cite: 10]<br>
+      • 98 : <em>noventa y ocho</em>[cite: 10]<br><br>
+      <strong>Angka > 100:</strong> Menggunakan pola <em>ciento + angka</em>[cite: 10]<br>
+      • 100 : <em>cien</em>[cite: 10]<br>
+      • 101 : <em>ciento uno</em>[cite: 10]<br>
+      • 125 : <em>ciento veinticinco</em>[cite: 10]<br>
+      • 150 : <em>ciento cincuenta</em>[cite: 10]
+    </div>
+  </div>
+</div>
+
+<!-- Bubble 2: Hari, Bulan, Musim & Waktu (Digabung dan Dibuat Tabel) -->
+<div class="vocab-category-card" style="margin-top: 15px;">
+  <div class="vocab-cat-header" onclick="toggleVocab('cat-waktu-spanyol', event)">
+    <span>Hari, Bulan, Musim & Waktu</span> 
+    <i class="fas fa-chevron-down"></i>
+  </div>
+  
+  <div class="vocab-list" id="cat-waktu-spanyol" style="padding: 15px;">
+    <!-- Hari -->
+    <h4 style="font-size: 14px; color: var(--green-dark); margin-bottom: 6px; font-weight: bold;">Hari (Días de la semana):</h4>
+    <div style="overflow-x: auto; margin-bottom: 12px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+        <thead>
+          <tr style="background-color: var(--bg-main); color: var(--text-dark); border-bottom: 2px solid var(--border-color);">
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Español</th>
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Arti</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">lunes</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Senin</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">martes</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Selasa</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">miércoles</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Rabu</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">jueves</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Kamis</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">viernes</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Jumat</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">sábado</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Sabtu</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">domingo</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Minggu</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Bulan -->
+    <h4 style="font-size: 14px; color: var(--green-dark); margin-bottom: 6px; font-weight: bold;">Bulan (Meses del año):</h4>
+    <div style="overflow-x: auto; margin-bottom: 12px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+        <thead>
+          <tr style="background-color: var(--bg-main); color: var(--text-dark); border-bottom: 2px solid var(--border-color);">
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Español</th>
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Arti</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">enero</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Januari</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">febrero</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Februari</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">marzo</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Maret</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">abril</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">April</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">mayo</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Mei</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">junio</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Juni</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">julio</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Juli</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">agosto</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Agustus</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">septiembre</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">September</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">octubre</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Oktober</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">noviembre</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">November</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">diciembre</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Desember</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Musim -->
+    <h4 style="font-size: 14px; color: var(--green-dark); margin-bottom: 6px; font-weight: bold;">Musim (Estaciones):</h4>
+    <div style="overflow-x: auto; margin-bottom: 12px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+        <thead>
+          <tr style="background-color: var(--bg-main); color: var(--text-dark); border-bottom: 2px solid var(--border-color);">
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Español</th>
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Arti</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">primavera</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Musim Semi</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">verano</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Musim Panas</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">otoño</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Musim Gugur</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">invierno</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Musim Dingin</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Waktu -->
+    <h4 style="font-size: 14px; color: var(--green-dark); margin-bottom: 6px; font-weight: bold;">Waktu (Tiempo):</h4>
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+        <thead>
+          <tr style="background-color: var(--bg-main); color: var(--text-dark); border-bottom: 2px solid var(--border-color);">
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Español</th>
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Arti</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">hoy</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Hari ini</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">ayer</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Kemarin</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">mañana</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Besok / Pagi</td></tr>
+          <tr style="background-color: #fafafa;"><td style="padding: 6px 10px; border: 1px solid var(--border-color);">la tarde</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Sore</td></tr>
+          <tr><td style="padding: 6px 10px; border: 1px solid var(--border-color);">la noche</td><td style="padding: 6px 10px; border: 1px solid var(--border-color);">Malam</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+    
+<!-- Bubble Baru: Menyebut Jam & Waktu (La Hora) -->
+<div class="vocab-category-card" style="margin-top: 15px;">
+  <div class="vocab-cat-header" onclick="toggleVocab('cat-jam-spanyol', event)">
+    <span>Menyebut Jam & Waktu (La Hora)</span> 
+    <i class="fas fa-chevron-down"></i>
+  </div>
+  
+  <div class="vocab-list" id="cat-jam-spanyol" style="padding: 15px;">
+    <!-- Pengantar -->
+    <p style="font-size: 14px; color: var(--text-dark); line-height: 1.6; margin-bottom: 12px;">
+    </p>
+
+    <!-- Tabel Jam Tepat -->
+    <h4 style="font-size: 14px; color: var(--green-dark); margin-bottom: 6px; font-weight: bold;">Menyebut Jam Tepat:</h4>
+    <div style="overflow-x: auto; margin-bottom: 15px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+        <thead>
+          <tr style="background-color: var(--bg-main); color: var(--text-dark); border-bottom: 2px solid var(--border-color);">
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color); text-align: center; width: 25%;">Jam</th>
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Español</th>
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color); text-align: center; width: 25%;">Jam</th>
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Español</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">01.00</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color);">Es la una</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">07.00</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color);">Son las siete</td>
+          </tr>
+          <tr style="background-color: #fafafa;">
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">02.00</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color);">Son las dos</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">08.00</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color);">Son las ocho</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">03.00</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color);">Son las tres</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">09.00</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color);">Son las nueve</td>
+          </tr>
+          <tr style="background-color: #fafafa;">
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">04.00</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color);">Son las cuatro</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">10.00</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color);">Son las diez</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">05.00</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color);">Son las cinco</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">11.00</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color);">Son las once</td>
+          </tr>
+          <tr style="background-color: #fafafa;">
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">06.00</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color);">Son las seis</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color); text-align: center; font-weight: bold;">12.00</td>
+            <td style="padding: 6px 8px; border: 1px solid var(--border-color);">Son las doce</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Menyebut Menit -->
+    <h4 style="font-size: 14px; color: var(--green-dark); margin-bottom: 6px; font-weight: bold;">Menyebut Menit:</h4>
+    <div style="overflow-x: auto; margin-bottom: 12px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+        <thead>
+          <tr style="background-color: var(--bg-main); color: var(--text-dark); border-bottom: 2px solid var(--border-color);">
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color); width: 25%;">Menit</th>
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color); width: 35%;">Struktur</th>
+            <th style="padding: 8px 10px; border: 1px solid var(--border-color);">Contoh</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding: 6px 10px; border: 1px solid var(--border-color);">1 - 29</td>
+            <td style="padding: 6px 10px; border: 1px solid var(--border-color);">Y + minutos</td>
+            <td style="padding: 6px 10px; border: 1px solid var(--border-color);">03.10 = las tres y diez<br>06.25 = las seis y veinticinco</td>
+          </tr>
+          <tr style="background-color: #fafafa;">
+            <td style="padding: 6px 10px; border: 1px solid var(--border-color);">15 (Seempat)</td>
+            <td style="padding: 6px 10px; border: 1px solid var(--border-color);">Y cuarto</td>
+            <td style="padding: 6px 10px; border: 1px solid var(--border-color);">05.15 = las cinco y cuarto</td>
+          </tr>
+          <tr>
+            <td style="padding: 6px 10px; border: 1px solid var(--border-color);">30 (Setengah)</td>
+            <td style="padding: 6px 10px; border: 1px solid var(--border-color);">Y media</td>
+            <td style="padding: 6px 10px; border: 1px solid var(--border-color);">07.30 = las siete y media</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Keterangan Menit Lebih dari 30 (Kurang / menos) -->
+    <p style="font-size: 13px; color: var(--text-dark); line-height: 1.6; margin-bottom: 10px;">
+      <em>Catatan:</em> Untuk menit lebih dari 30, bahasa Spanyol menggunakan bentuk <strong>menos (kurang)</strong>. Artinya, jam berikutnya dikurangi menit
+    </p>
+    <div style="font-size: 13px; color: var(--text-dark); background: var(--bg-main); padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border-color);">
+      <strong>Contoh:</strong><br>
+      • 06.45 = <em>Las siete menos cuarto</em> (Pukul tujuh kurang seperempat)<br>
+      • 08.50 = <em>Las nueve menos diez</em> (Pukul sembilan kurang sepuluh menit)
+    </div>
+  </div>
+</div>
 
       <!-- Layar Bacaan Cerita -->
       <div id="reader-view" class="reader-container">
