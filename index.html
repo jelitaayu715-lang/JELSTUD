@@ -126,14 +126,13 @@
       .vocab-search-wrapper { grid-column: 1 / -1; }
     }
     @media (min-width: 900px) {
-      .container, .app-container { max-width: 1200px; }
-      .navbar { max-width: 1200px; }
+      .container, .app-container { max-width: 1000px; }
+      .navbar { max-width: 1000px; }
       .bottom-nav { max-width: 800px; }
-      #stories-list { display: flex; gap: 24px; align-items: flex-start; }
-      .baca-left-column { flex: 1; min-width: 0; }
-      .baca-right-column { flex: 1; min-width: 0; }
-      .spanish-alphabet-section { margin-top: 0 !important; }
-    }
+      #stories-list { display: flex; flex-direction: column; gap: 20px; }
+      .baca-left-column, .baca-right-column { width: 100%; flex: none; }
+      .spanish-alphabet-section { margin-top: 20px !important; }
+   }
 
     /* Streak Banner */
     .streak-banner { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 16px 18px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
@@ -300,9 +299,9 @@
     <!-- TAB 1: BACA -->
     <div id="tab-baca" class="tab-content active">
       <div id="stories-list">
-      <div class="baca-left-column">
-        <div class="section-title"><i class="fas fa-book-open"></i> Cerita Harian (2 Cerita / Hari)</div>
-        <div id="dynamic-stories-container"></div>
+        <div class="baca-left-column">
+          <div class="section-title"><i class="fas fa-book-open"></i> Cerita Harian (2 Cerita / Hari)</div>
+          <div id="dynamic-stories-container"></div>
 
         <!-- Kuis Pilihan Ganda Harian (5 Soal) -->
         <div class="main-quiz-section">
@@ -580,8 +579,6 @@
       </div>
 
       <div class="grammar-note">
-        <div class="grammar-title">📌Apa itu tilde (')</div>
-        <div class="grammar-note">
           <div class="grammar-title">📌 Apa itu tilde (')</div>
           Tilde adalah tanda aksen kecil di atas huruf vokal <strong>(á ,é ,í ,ó ,ú )</strong>. Fungsinya untuk <strong>penekanan suku kata</strong> atau <strong>membedakan arti kata</strong>.
           <br><br>
