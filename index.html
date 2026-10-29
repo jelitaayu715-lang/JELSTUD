@@ -122,8 +122,9 @@
     .vocab-grid { display: flex; flex-direction: column; gap: 14px; }
     .vocab-search-wrapper { width: 100%; }
     @media (min-width: 900px) {
-      .vocab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; }
-      .vocab-search-wrapper { grid-column: 1 / -1; }
+      .vocab-grid { display: block; column-count: 2; column-gap: 24px; }
+      .vocab-category-card { break-inside: avoid; margin-bottom: 14px; }
+      .vocab-search-wrapper { break-inside: avoid; margin-bottom: 14px; column-span: all; }
     }
     @media (min-width: 900px) {
       .container, .app-container { max-width: 1000px; }
